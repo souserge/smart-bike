@@ -1,2 +1,3 @@
-# smart_bike
-MES project
+# Welcome to the Smart Biclycle!
+
+## Server-side app
