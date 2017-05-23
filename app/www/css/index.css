@@ -9,14 +9,27 @@ body {
     text-align: center;
 }
 
-#unlockScreen {
+#statsScreen {
     margin-top: 40px; /* iOS */
     text-align: center;
+    width: 20px;
+    height: 50px;
+    
 }
 
 #connectionScreen {
 }
-
+.ui-content {
+    padding: 0 !important;
+}
+  
+.ui-listview {
+    margin: 0 !important;
+}
+  
+.example-wrapper, .example-wrapper div.iscroll-scroller {
+    width: 100% !important;
+}
 input {
     display: block;
     margin: 10px;
@@ -36,10 +49,18 @@ input[type=submit] {
     border-radius: 0;
 }
 
-button {
-    -webkit-appearance: none;
+#bluetoothButton {
+    
+    background: url('../bluetooth.png') no-repeat top left;
+    background-size: contain;
+    margin-top: 30px;
     font-size: 1.5em;
-    border-radius: 0;
+    border: none;
+    width: 200px;
+    height: 200px;
+     
+    align-self: center;
+    
 }
 
 form {
