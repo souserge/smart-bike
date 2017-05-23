@@ -1,7 +1,3 @@
-/*global cordova, ble, deviceListScreen, unlockScreen, scrim, statusDiv, deviceList, refreshButton, disconnectButton*/
-
-// Bluetooth Low Energy Lock (c) 2014-2015 Don Coleman
-
 var SERVICE_UUID = 'D270';
 var UNLOCK_UUID = 'D271';
 var MESSAGE_UUID = 'D272';
@@ -22,28 +18,20 @@ function bytesToString(buffer) {
 
 var app = {
     initialize: function() {
+        statsScreen.hidden = true;
+        hideScreen.hidden = true;
         this.bindEvents();
-        deviceListScreen.hidden = true;
-        unlockScreen.hidden = true;
     },
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
-        document.forms[0].addEventListener('submit', this.unlock, false);
     },
     onDeviceReady: function() {
-        deviceList.ontouchstart = app.connect; // assume not scrolling
-        refreshButton.ontouchstart = app.scan;
-        disconnectButton.onclick = app.disconnect;
-
-        app.scan();
+        bluetoothButton.ontouchstart = app.scan;
     },
     scan: function(e) {
-        deviceList.innerHTML = ""; // clear the list
-        app.showProgressIndicator("Scanning for Bluetooth Devices...");
-
         ble.startScan([SERVICE_UUID],
             app.onDeviceDiscovered,
-            function() { alert("Listing Bluetooth Devices Failed"); }
+            function() { alert("Listing Bluetooth Device Failed"); }
         );
 
         // stop scan after 5 seconds
@@ -51,42 +39,30 @@ var app = {
 
     },
     onDeviceDiscovered: function(device) {
-        var listItem, rssi;
-
-        app.showDeviceListScreen();
-
-        console.log(JSON.stringify(device));
-        listItem = document.createElement('li');
-        listItem.dataset.deviceId = device.id;
-        if (device.rssi) {
-            rssi = "RSSI: " + device.rssi + "<br/>";
-        } else {
-            rssi = "";
-        }
-        listItem.innerHTML = device.name + "<br/>" + rssi + device.id;
-        deviceList.appendChild(listItem);
-
-        var deviceListLength = deviceList.getElementsByTagName('li').length;
-        app.setStatus("Found " + deviceListLength +
-                      " device" + (deviceListLength === 1 ? "." : "s."));
-    },
-    onScanComplete: function() {
-        var deviceListLength = deviceList.getElementsByTagName('li').length;
-        if (deviceListLength === 0) {
-            app.showDeviceListScreen();
-            app.setStatus("No Bluetooth Peripherals Discovered.");
-        }
-    },
-    connect: function (e) {
+        var deviceName, rssi;
         var device = e.target.dataset.deviceId;
-        app.showProgressIndicator("Requesting connection to " + device);
-        ble.connect(device, app.onConnect, app.onDisconnect);
+        console.log(JSON.stringify(device));
+
+        if (device.rssi) {  //Add the condition to connect to the bluetooth server
+            ble.connect(device, app.onConnect, app.onDisconnect);
+        }
+  
     },
+    onScanComplete: function() {       
+        var device = e.target.dataset.deviceId;
+
+        if (device) {
+            app.showstats();
+        }
+        else{
+            app.setStatus("Device not discovered.");
+        }
+    },
+
     onConnect: function(peripheral) {
         app.connectedPeripheral = peripheral;
-        app.showUnlockScreen();
-        app.setStatus("Connected");
         ble.notify(peripheral.id, SERVICE_UUID, MESSAGE_UUID, app.onData);
+        app.setStatus("Connected to the device.");
     },
     onDisconnect: function(reason) {
         if (!reason) {
@@ -110,59 +86,15 @@ var app = {
     onData: function(buffer) {
         var message = bytesToString(buffer);
         app.setStatus(message);
-        app.hideProgressIndicator();
     },
-    unlock: function(e) {
-        var code = e.target.code.value;
-        e.preventDefault(); // don't submit the form
 
-        if (code === "") { return; } // don't send empty data
-        app.showProgressIndicator();
-
-        function success() {
-            e.target.code.value = ""; //  clear the input
-        }
-
-        function failure (reason) {
-            alert("Error sending code " + reason);
-            app.hideProgressIndicator();
-        }
-
-        ble.write(
-            app.connectedPeripheral.id,
-            SERVICE_UUID,
-            UNLOCK_UUID,
-            stringToArrayBuffer(code),
-            success, failure
-        );
-
-    },
-    showProgressIndicator: function(message) {
-        if (!message) { message = "Processing"; }
-        scrim.firstElementChild.innerHTML = message;
-        scrim.hidden = false;
-        statusDiv.innerHTML = "";
-    },
-    hideProgressIndicator: function() {
-        scrim.hidden = true;
-    },
-    showDeviceListScreen: function() {
-        unlockScreen.hidden = true;
-        deviceListScreen.hidden = false;
-        app.hideProgressIndicator();
-        statusDiv.innerHTML = "";
-    },
-    showUnlockScreen: function() {
-        unlockScreen.hidden = false;
-        deviceListScreen.hidden = true;
-        app.hideProgressIndicator();
-        statusDiv.innerHTML = "";
+    showStats: function() {
+        statsScreen.hidden = false;
     },
     setStatus: function(message){
         console.log(message);
         statusDiv.innerHTML = message;
     }
-
 };
 
 app.initialize();
