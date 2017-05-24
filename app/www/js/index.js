@@ -1,6 +1,10 @@
 var SERVICE_UUID = 'D270';
 var UNLOCK_UUID = 'D271';
 var MESSAGE_UUID = 'D272';
+function getRandomNumber(){
+    
+    return "a";
+}
 
 function stringToArrayBuffer(str) {
     // assuming 8 bit bytes
@@ -11,89 +15,109 @@ function stringToArrayBuffer(str) {
     }
     return ret.buffer;
 }
-
+var Counter=5;
+function startCountdown(){
+    if((Counter - 1) > -1){
+        Counter = Counter - 1;
+        setTimeout('startCountdown()',1000);
+        if(Counter>=1)
+            bluetoothState.append(" "+Counter);
+    }
+}
 function bytesToString(buffer) {
     return String.fromCharCode.apply(null, new Uint8Array(buffer));
 }
 
 var app = {
     initialize: function() {
-        statsScreen.hidden = true;
-        hideScreen.hidden = true;
+        statsScreen.hidden = true;//Only show it when connected
         this.bindEvents();
+        hideScreen.hidden = true;//Just to hide the initial transition
     },
+
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
-    onDeviceReady: function() {
+
+    onDeviceReady: function() {//add here all the buttons
         bluetoothButton.ontouchstart = app.scan;
     },
+
     scan: function(e) {
+        bluetoothButton.ontouchstart = "";//prevent from touching it again
+
+        Counter=5;
+        startCountdown();
+
+        bluetoothState.innerHTML="Scanning...";
         ble.startScan([SERVICE_UUID],
-            app.onDeviceDiscovered,
-            function() { alert("Listing Bluetooth Device Failed"); }
-        );
-
-        // stop scan after 5 seconds
-        setTimeout(ble.stopScan, 5000, app.onScanComplete);
-
+                      app.onDeviceDiscovered,
+                      function() {bluetoothState.innerHTML="Device not found";}
+                     );
+        setTimeout(ble.stopScan, 5000, app.onScanComplete);//stop scan after 5 seconds
     },
+
     onDeviceDiscovered: function(device) {
-        var deviceName, rssi;
-        var device = e.target.dataset.deviceId;
         console.log(JSON.stringify(device));
-
         if (device.rssi) {  //Add the condition to connect to the bluetooth server
-            ble.connect(device, app.onConnect, app.onDisconnect);
+            app.connect();//try to connect if it's detected
         }
-  
     },
-    onScanComplete: function() {       
-        var device = e.target.dataset.deviceId;
 
-        if (device) {
-            app.showstats();
-        }
-        else{
-            app.setStatus("Device not discovered.");
-        }
+    onScanComplete: function() {
+        bluetoothButton.ontouchstart = app.scan;
+        app.showStats(); //JUST FOR DEBUGGING!!
+        bluetoothState.innerHTML="Device not discovered";
+    },
+
+    connect: function (e) {
+        var device = e.target.dataset.deviceId;
+        bluetoothState.innerHTML="Requesting connection";
+        ble.connect(device, app.onConnect, app.onDisconnect);
     },
 
     onConnect: function(peripheral) {
+        bluetoothState.innerHTML="Connected";
+        app.showStats();
         app.connectedPeripheral = peripheral;
         ble.notify(peripheral.id, SERVICE_UUID, MESSAGE_UUID, app.onData);
-        app.setStatus("Connected to the device.");
+        bluetoothScreen.hidden=true;
     },
+
     onDisconnect: function(reason) {
         if (!reason) {
             reason = "Connection Lost";
         }
-        app.hideProgressIndicator();
-        app.showDeviceListScreen();
-        app.setStatus(reason);
+        bluetoothScreen.hidden=false;
+        statsScreen.hidden=true;
+        bluetoothState.innerHTML=reason;
     },
+
     disconnect: function (e) {
         if (e) {
             e.preventDefault();
         }
 
-        app.setStatus("Disconnecting...");
+        bluetoothState.innerHTML="Disconnecting...";
         ble.disconnect(app.connectedPeripheral.id, function() {
-            app.setStatus("Disconnected");
+            bluetoothState.innerHTML="Disconnected";
             setTimeout(app.scan, 800);
         });
     },
+
     onData: function(buffer) {
         var message = bytesToString(buffer);
-        app.setStatus(message);
+        bluetoothState.innerHTML=message;
     },
 
     showStats: function() {
         statsScreen.hidden = false;
-    },
-    setStatus: function(message){
-        console.log(message);
-        statusDiv.innerHTML = message;
+        //        speedNumber=parseFloat(Math.round(Math.random() * 10000) / 100).toFixed(2);
+        //        avgspeedNumber=parseFloat(Math.round(Math.random() * 10000) / 100).toFixed(2);
+        //        distanceNumber=parseFloat(Math.round(Math.random() * 10000) / 100).toFixed(2);
+        //        speedCell.innerHTML=speedNumber+" km/h";
+        //        avgspeedCell.innerHTML=avgspeedNumber+" km/h";
+        //        distanceCell.innerHTML=distanceNumber+" km";
     }
 };
 
