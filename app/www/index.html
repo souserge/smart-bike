@@ -1,32 +1,60 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <!-- Include meta tag to ensure proper rendering and touch zooming -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Include jQuery Mobile stylesheets -->
+        <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+
+        <!-- Include the jQuery library -->
+        <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+        <!-- Include the jQuery Mobile library -->
+        <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
         <meta charset="utf-8">
-        <meta name="viewport" content="initial-scale=1, maximum-scale=1,
-         user-scalable=no, width=device-width">
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
-        <title>BLE Lock</title>
+
+        <!--   <link rel="stylesheet" type="text/css" href="css/index.css" /   This is not necessary cause jQuery>--> 
+        <title>Smart bike</title>
     </head>
+
+    <style>
+        .ui-icon-custom {background-image: url('bluetooth.png');}
+        tr {border-bottom: 1px solid #d6d6d6;}
+        tr:nth-child(even) {background: #e9e9e9;}
+    </style>
+
+
     <body>
-        <div id="deviceListScreen">
-            <h1>Devices</h1>
-            <ul id="deviceList">
-                <li>Searching...</li>
-            </ul>
+        <div id="hideScreen">
+            <img src="hide.png" style="width:3000px;height:3000px;">
+        </div>
+        <div id="bluetoothScreen" style="margin:0 auto; margin-top:50px; margin-left:auto; margin-right:auto; align:center; text-align:center;">
             <div>
-                <button id="refreshButton">Refresh</button>
+                <a data-role="button" data-inline="true" type="submit" id="bluetoothButton">
+                    <img src="bluetooth.png" width="150px" height="150px"/>
+                </a>
+                <p id="bluetoothState">Tap to connect</p>
             </div>
         </div>
-        <div id="unlockScreen">
-            <form>
-                <input type="tel" name="code">
-                <input type="submit" value="Unlock">
-            </form>
-            <button id="disconnectButton">Disconnect</button>
-        </div>
-        <div id="statusDiv"></div>
-        <div id="scrim">
-            <p>Processing</p>
+        <div id="statsScreen">
+            <table data-role="table" class="ui-responsive ui-shadow" id="statsTable">
+                <thead>
+                    <tr>
+                        <th>Speed</th>
+                        <th>Avg Speed</th>
+                        <th>Distance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td id="speedCell">21.52 km/h</td>
+                        <td id="avgspeedCell">10.1 km/h</td>
+                        <td id="distanceCell">20 km</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
