@@ -1,10 +1,6 @@
 var SERVICE_UUID = 'D270';
 var UNLOCK_UUID = 'D271';
 var MESSAGE_UUID = 'D272';
-function getRandomNumber(){
-    
-    return "a";
-}
 
 function stringToArrayBuffer(str) {
     // assuming 8 bit bytes
