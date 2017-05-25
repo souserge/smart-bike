@@ -1,15 +1,26 @@
-var util = require('util');
-var bleno = require('bleno');
+const bleno = require('bleno')
+
+const PI_NAME = 'SmartBike'
+
+bleno.on('stateChange', (state) => {
+    console.log('State change: ' + state);
+    if (state === 'poweredOn') {
+        bleno.startAdvertising(PI_NAME, ['12ab']);
+    } else {
+        bleno.stopAdvertising();
+    }
+});
 
 var PrimaryService = bleno.PrimaryService;
 var Characteristic = bleno.Characteristic;
 var Descriptor = bleno.Descriptor;
 
-var secret = '12345';
 
 // Write the secret to this Characteristic to unlock
-var UnlockCharacteristic = function() {
-    UnlockCharacteristic.super_.call(this, {
+class UnlockCharacteristic extends Characteristic {
+  constructor() {
+    
+    super({
       uuid: 'd271',
       properties: ['write'],
       descriptors: [
@@ -18,39 +29,37 @@ var UnlockCharacteristic = function() {
            value: 'Unlock'
          })
       ]
-    });
-  };
-util.inherits(UnlockCharacteristic, Characteristic);
-
-
-UnlockCharacteristic.prototype.onWriteRequest = function(data, offset, withoutResponse, callback) {
-  var status;
-
-  if (data.toString() === secret) {
-    status = 'unlocked';
-  } else {
-    status = 'invalid code';
+    })
+    
   }
+  
+  onWriteRequest(data, offset, withoutResponse, callback) {
+    let status
 
-  // reset lock and lights after 4 seconds
-  setTimeout(this.reset.bind(this), 4000);
+    // reset lock and lights after 4 seconds
+    setTimeout(this.reset.bind(this), 4000);
 
-  console.log('unlock: ' + data);
-  console.log('status: ' + status);
+    console.log('unlock: ' + data);
+    console.log('status: ' + status);
 
-  callback(this.RESULT_SUCCESS);
+    callback(this.RESULT_SUCCESS);
 
-  this.emit('status', status);
-};
-
-// close the lock and reset the lights
-UnlockCharacteristic.prototype.reset = function() {
-  this.emit('status', 'locked');
+    this.emit('status', status);
+  }
+  
+  // close the lock and reset the lights
+  reset() {
+    this.emit('status', 'locked');
+  }
+  
 }
 
+
 // Current status of the lock
-var StatusCharacteristic = function(unlockCharacteristic) {
-    StatusCharacteristic.super_.call(this, {
+class StatusCharacteristic extends Characteristic {
+  
+  constructor() {
+    super({
       uuid: 'd272',
       properties: ['notify'],
       descriptors: [
@@ -62,19 +71,21 @@ var StatusCharacteristic = function(unlockCharacteristic) {
     });
 
     unlockCharacteristic.on('status', this.onUnlockStatusChange.bind(this));
-  };
-util.inherits(StatusCharacteristic, Characteristic);
-
-StatusCharacteristic.prototype.onUnlockStatusChange = function(status) {
-  if (this.updateValueCallback) {
-    this.updateValueCallback(new Buffer(status));
   }
-};
+  
+  onUnlockStatusChange(status) {
+    if (this.updateValueCallback) {
+      this.updateValueCallback(new Buffer(status));
+    }
+  }
+  
+}
 
-var unlockCharacteristic = new UnlockCharacteristic();
-var statusCharacteristic = new StatusCharacteristic(unlockCharacteristic);
 
-var lockService = new PrimaryService({
+const unlockCharacteristic = new UnlockCharacteristic();
+const statusCharacteristic = new StatusCharacteristic(unlockCharacteristic);
+
+const bikeService = new PrimaryService({
   uuid: 'd270',
   characteristics: [
     unlockCharacteristic, 
@@ -86,7 +97,7 @@ bleno.on('stateChange', function(state) {
   console.log('on -> stateChange: ' + state);
 
   if (state === 'poweredOn') {
-    bleno.startAdvertising('RPi Lock', [lockService.uuid]);
+    bleno.startAdvertising('RPi Lock', [bikeService.uuid]);
   } else {
     bleno.stopAdvertising();
   }
@@ -96,9 +107,10 @@ bleno.on('advertisingStart', function(error) {
   console.log('on -> advertisingStart: ' + (error ? 'error ' + error : 'success'));
 
   if (!error) {
-    bleno.setServices([lockService]);
+    bleno.setServices([bikeService]);
   }
 });
+
 
 // cleanup GPIO on exit
 function exit() {

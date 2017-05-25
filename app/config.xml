@@ -11,5 +11,6 @@
     <access origin="*" />
     <preference name="KeyboardDisplayRequiresUserAction" value="true" />
     <preference name="Orientation" value="portrait" />
-    <preference name="DisallowOverscroll" value="true"/>
+    <preference name="DisallowOverscroll" value="true" />
+    <plugin name="cordova-plugin-geolocation" spec="~2.4.3" />
 </widget>
