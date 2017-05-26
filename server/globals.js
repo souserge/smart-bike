@@ -8,4 +8,4 @@ module.exports = {
   PI_UUID,
   BIKE_SERVICE_NAME,
   BIKE_SERVICE_UUID
-};
+}

@@ -1,7 +1,7 @@
 const bleno = require('bleno')
 
-const test = require('characteristics/test')
-const globals = require('globals')
+const test = require('./characteristics/test')
+const globals = require('./globals')
 
 const PrimaryService = bleno.PrimaryService
 

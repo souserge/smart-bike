@@ -1,6 +1,6 @@
 const bleno = require('bleno')
 
-import strToBuff from 'convertData'
+const convertData = require('../convertData')
 
 const Characteristic = bleno.Characteristic,
       Descriptor     = bleno.Descriptor
@@ -27,7 +27,7 @@ class TestCharacteristic extends Characteristic {
 
   onReadRequest(offset, callback) {
     console.log('Read request: Test')
-    const data = strToBuff('42.42')
+    const data = convertData.strToBuff('42.42')
     callback(this.RESULT_SUCCESS, data)
   } 
 }
