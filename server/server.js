@@ -2,6 +2,19 @@ const bleno = require('bleno')
 
 const PI_NAME = 'SmartBike'
 
+function stringToArrayBuffer(str) {
+    // assuming 8 bit bytes
+    var ret = new Uint8Array(str.length);
+    for (var i = 0; i < str.length; i++) {
+        ret[i] = str.charCodeAt(i);
+    }
+    return ret.buffer;
+}
+
+function bytesToString(buffer) {
+  return String.fromCharCode.apply(null, new Uint8Array(buffer));
+}
+
 bleno.on('stateChange', (state) => {
     console.log('State change: ' + state);
     if (state === 'poweredOn') {
@@ -17,79 +30,42 @@ var Descriptor = bleno.Descriptor;
 
 
 // Write the secret to this Characteristic to unlock
-class UnlockCharacteristic extends Characteristic {
+class LightCharacteristic extends Characteristic {
   constructor() {
-    
     super({
       uuid: 'd271',
-      properties: ['write'],
+      properties: [ 'read', 'write'],
       descriptors: [
          new Descriptor({
            uuid: '2901',
-           value: 'Unlock'
+           value: 'Light'
          })
       ]
-    })
-    
+    }) 
   }
   
   onWriteRequest(data, offset, withoutResponse, callback) {
-    let status
-
-    // reset lock and lights after 4 seconds
-    setTimeout(this.reset.bind(this), 4000);
-
-    console.log('unlock: ' + data);
-    console.log('status: ' + status);
-
-    callback(this.RESULT_SUCCESS);
-
-    this.emit('status', status);
+    console.log('Write request: Light')
+    console.log('Data sent: ' + data)
+    callback(this.RESULT_SUCCESS)
   }
-  
-  // close the lock and reset the lights
-  reset() {
-    this.emit('status', 'locked');
-  }
-  
+
+  onReadRequest(offset, callback) {
+    console.log('Read request: Light')
+    const result = Characteristic.RESULT_SUCCESS
+    const data = Buffer.from("42.42", 'utf8');
+    
+    console.log(data.toString('utf8'))
+    callback(result, data);
+  } 
 }
 
-
-// Current status of the lock
-class StatusCharacteristic extends Characteristic {
-  
-  constructor() {
-    super({
-      uuid: 'd272',
-      properties: ['notify'],
-      descriptors: [
-         new Descriptor({
-           uuid: '2901',
-           value: 'Status Message'
-         })
-      ]      
-    });
-
-    unlockCharacteristic.on('status', this.onUnlockStatusChange.bind(this));
-  }
-  
-  onUnlockStatusChange(status) {
-    if (this.updateValueCallback) {
-      this.updateValueCallback(new Buffer(status));
-    }
-  }
-  
-}
-
-
-const unlockCharacteristic = new UnlockCharacteristic();
-const statusCharacteristic = new StatusCharacteristic(unlockCharacteristic);
+const lightCharacteristic = new LightCharacteristic();
 
 const bikeService = new PrimaryService({
   uuid: 'd270',
   characteristics: [
-    unlockCharacteristic, 
-    statusCharacteristic
+    lightCharacteristic
   ]
 });
 
