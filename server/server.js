@@ -1,95 +1,33 @@
 const bleno = require('bleno')
 
-const PI_NAME = 'SmartBike'
+const test = require('characteristics/test')
+const globals = require('globals')
 
-function stringToArrayBuffer(str) {
-    // assuming 8 bit bytes
-    var ret = new Uint8Array(str.length);
-    for (var i = 0; i < str.length; i++) {
-        ret[i] = str.charCodeAt(i);
-    }
-    return ret.buffer;
-}
+const PrimaryService = bleno.PrimaryService
 
-function bytesToString(buffer) {
-  return String.fromCharCode.apply(null, new Uint8Array(buffer));
-}
-
-bleno.on('stateChange', (state) => {
-    console.log('State change: ' + state);
-    if (state === 'poweredOn') {
-        bleno.startAdvertising(PI_NAME, ['12ab']);
-    } else {
-        bleno.stopAdvertising();
-    }
-});
-
-var PrimaryService = bleno.PrimaryService;
-var Characteristic = bleno.Characteristic;
-var Descriptor = bleno.Descriptor;
-
-
-// Write the secret to this Characteristic to unlock
-class LightCharacteristic extends Characteristic {
-  constructor() {
-    super({
-      uuid: 'd271',
-      properties: [ 'read', 'write'],
-      descriptors: [
-         new Descriptor({
-           uuid: '2901',
-           value: 'Light'
-         })
-      ]
-    }) 
-  }
-  
-  onWriteRequest(data, offset, withoutResponse, callback) {
-    console.log('Write request: Light')
-    console.log('Data sent: ' + data)
-    callback(this.RESULT_SUCCESS)
-  }
-
-  onReadRequest(offset, callback) {
-    console.log('Read request: Light')
-    const result = Characteristic.RESULT_SUCCESS
-    const data = Buffer.from("42.42", 'utf8');
-    
-    console.log(data.toString('utf8'))
-    callback(result, data);
-  } 
-}
-
-const lightCharacteristic = new LightCharacteristic();
+const testCharacteristic = new test.TestCharacteristic();
 
 const bikeService = new PrimaryService({
-  uuid: 'd270',
+  uuid: globals.BIKE_SERVICE_UUID,
   characteristics: [
-    lightCharacteristic
+    testCharacteristic
   ]
 });
 
 bleno.on('stateChange', function(state) {
-  console.log('on -> stateChange: ' + state);
+  console.log('State changed to: ' + state)
 
   if (state === 'poweredOn') {
-    bleno.startAdvertising('RPi Lock', [bikeService.uuid]);
+    bleno.startAdvertising(globals.PI_NAME, [globals.PI_UUID])
+    bleno.startAdvertising(globals.BIKE_SERVICE_NAME, [bikeService.uuid]);
   } else {
     bleno.stopAdvertising();
   }
-});
+})
 
 bleno.on('advertisingStart', function(error) {
-  console.log('on -> advertisingStart: ' + (error ? 'error ' + error : 'success'));
-
+  console.log('Advertising started: ' + (error ? 'error ' + error : 'success'))
   if (!error) {
-    bleno.setServices([bikeService]);
+    bleno.setServices([bikeService])
   }
-});
-
-
-// cleanup GPIO on exit
-function exit() {
-  process.exit();
-}
-process.on('SIGINT', exit);
+})

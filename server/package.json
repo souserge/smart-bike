@@ -1,5 +1,5 @@
 {
-  "name": "Supaa Bike",
+  "name": "smart_bike",
   "version": "0.0.1",
   "description": "A bicycle smart assistant",
   "author": "Supaa Bike Team <supaabike@gmail.com>",
@@ -21,7 +21,7 @@
     "module-name": "./bin/module-name"
   },
   "scripts": {
-    "start": "node server.js",  
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
