@@ -20,15 +20,16 @@ class TestCharacteristic extends Characteristic {
   }
   
   onWriteRequest(data, offset, withoutResponse, callback) {
-    console.log('Write request: Test')
-    console.log('Data sent: ' + data)
+    console.log('Test - WriteRequest:')
+    console.log('\tValue: ' + data)
     callback(this.RESULT_SUCCESS)
   }
 
   onReadRequest(offset, callback) {
-    console.log('Read request: Test')
-    const data = convertData.strToBuff('42.42')
-    callback(this.RESULT_SUCCESS, data)
+    console.log('Test - ReadRequest:')
+    const data = 'world!'
+    console.log('\tValue: ' + data)
+    callback(this.RESULT_SUCCESS, convertData.strToBuff(data))
   } 
 }
 
