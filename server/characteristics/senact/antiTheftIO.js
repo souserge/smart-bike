@@ -14,7 +14,8 @@ const antiTheftIO = {
   setAlarm: (value) => {
     if (value)console.log('THIEF!!!!')
     this.isOn = value
-    rpio.write(actuators.BUZZER, +value)
+    rpio.write(actuators.BUZZER, rpio.HIGH)
+    
   },
   
   toggle: (mode) => {
@@ -22,7 +23,9 @@ const antiTheftIO = {
     console.log('Anti-Theft mode: ' + (mode ? 'on' : 'off'))
     if (mode) {
       rpio.poll(sensors.VIBRA, (pin) => {
-        antiTheftIO.setAlarm(rpio.read(pin))
+        if (rpio.read(pin)) {
+          antiTheftIO.setAlarm()
+        }
       })
     } else {
       rpio.poll(sensors.LIGHT, null)

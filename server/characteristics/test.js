@@ -24,7 +24,7 @@ class TestCharacteristic extends Characteristic {
     console.log('Test - ReadRequest:')
     const data = 'world!'
     console.log('\tValue: ' + data)
-    callback(this.RESULT_SUCCESS, convertData.strToBuff(data))
+    callback(this.RESULT_SUCCESS, Buffer.from(data, 'utf8'))
   } 
 }
 
