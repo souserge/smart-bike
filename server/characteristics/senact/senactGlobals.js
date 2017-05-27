@@ -1,10 +1,11 @@
 const sensors = {
-  LIGHT: 13,
+  LIGHT: 7,
   VIBRA: 11
 }
 
 const actuators = {
-    LED: 12
+    LED: 12,
+    BUZZER: 13
 }
 
 module.exports = {

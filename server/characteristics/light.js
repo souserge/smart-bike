@@ -1,4 +1,6 @@
 const bleno = require('bleno')
+
+const ids = require('../global/ble').bleIds
 const lightIO = require('./senact/lightIO')
 
 const Characteristic = bleno.Characteristic,
@@ -7,7 +9,7 @@ const Characteristic = bleno.Characteristic,
 class LightCharacteristic extends Characteristic {
   constructor() {
     super({
-      uuid: 'd272',
+      uuid: ids.get('LIGHT_CH').uuid,
       properties: [ 'read', 'write']
     })
   

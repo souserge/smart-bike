@@ -1,5 +1,6 @@
 const bleno = require('bleno')
 
+const ids = require('../global/ble').bleIds
 const convertData = require('../convertData')
 
 const Characteristic = bleno.Characteristic,
@@ -8,7 +9,7 @@ const Characteristic = bleno.Characteristic,
 class TestCharacteristic extends Characteristic {
   constructor() {
     super({
-      uuid: 'd271',
+      uuid: ids.get('TEST_CH').uuid,
       properties: [ 'read', 'write']
     }) 
   }
