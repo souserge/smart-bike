@@ -10,7 +10,7 @@ class TestCharacteristic extends Characteristic {
   constructor() {
     super({
       uuid: ids.get('TEST_CH').uuid,
-      properties: [ 'read', 'write']
+      properties: ['read', 'write']
     }) 
   }
   

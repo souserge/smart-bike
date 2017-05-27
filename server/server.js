@@ -1,5 +1,4 @@
 const bleno = require('bleno')
-
 const TestCharacteristic = require('./characteristics/test')
 const LightCharacteristic = require('./characteristics/light')
 const ids = require('../global/ble').bleIds
@@ -34,3 +33,7 @@ bleno.on('advertisingStart', function(error) {
     bleno.setServices([bikeService])
   }
 })
+
+process.on('SIGTERM', function () {
+  
+}
