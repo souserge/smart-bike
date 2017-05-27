@@ -13,14 +13,18 @@ module.exports = {
   
   set: (value) => {
     this.isOn = value
-    rpio.read(actuators.LED, value)
+    rpio.write(actuators.LED, value)
+    console.log('Lights Toggled: ' + (mode ? 'on' : 'off'))
   },
   
   setModeAutomatic: (mode) => {
     this.isAutomatic = mode
-    console.log('Lights Mode: ' + (mode ? 'on' : 'off'))
+    
     if (mode) {
-      rpio.poll(sensors.LIGHT, (pin) => { this.set(rpio.read(pin)) }) // TOGGLE LIGHTS IF READ 1
+      rpio.poll(sensors.LIGHT, (pin) => { 
+        console.log('Lights Automatic Mode: ' + (mode ? 'on' : 'off'))
+        this.set(rpio.read(pin)) // TOGGLE LIGHTS IF READ 1
+      })
     } else {
       rpio.poll(sensors.LIGHT, null)
     }
