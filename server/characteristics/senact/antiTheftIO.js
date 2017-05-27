@@ -5,19 +5,24 @@ const actuators = require('./senactGlobals').actuators
 
 const antiTheftIO = {
   isOn: false,
+  isSignaling: false,
   
   init: () => {
     rpio.open(sensors.VIBRA, rpio.INPUT)
     rpio.open(actuators.BUZZER, rpio.OUTPUT, rpio.LOW)
   },
   
-  setAlarm: (value) => {
-    if (value)console.log('THIEF!!!!')
-    this.isOn = value
-    rpio.write(actuators.BUZZER, rpio.HIGH)
-    setTimeout(() => {
-      rpio.write(actuators.BUZZER, rpio.LOW)
-    }, 200)
+  setAlarm: () => {
+    console.log('THIEF!!')
+    
+    if(!this.isSignaling) {
+      rpio.write(actuators.BUZZER, rpio.HIGH)
+      this.isSignaling = true
+      setTimeout(() => {
+        antiTheftIO.isSignaling = false
+        rpio.write(actuators.BUZZER, rpio.LOW)
+      }, 500)
+    }
   },
   
   toggle: (mode) => {
@@ -34,9 +39,5 @@ const antiTheftIO = {
     }
   }
 }
-
-
-antiTheftIO.init()
-antiTheftIO.toggle(true)
 
 module.exports = antiTheftIO
