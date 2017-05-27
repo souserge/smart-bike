@@ -41,4 +41,4 @@ bleno.on('advertisingStart', function(error) {
 
 process.on('SIGTERM', function () {
   
-}
+})
