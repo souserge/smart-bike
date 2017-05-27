@@ -5,7 +5,7 @@ const globals = require('./globals')
 
 const PrimaryService = bleno.PrimaryService
 
-const testCharacteristic = new test.TestCharacteristic();
+const testCharacteristic = new test.TestCharacteristic()
 
 const bikeService = new PrimaryService({
   uuid: globals.BIKE_SERVICE_UUID,
@@ -19,9 +19,9 @@ bleno.on('stateChange', function(state) {
 
   if (state === 'poweredOn') {
     bleno.startAdvertising(globals.PI_NAME, [globals.PI_UUID])
-    bleno.startAdvertising(globals.BIKE_SERVICE_NAME, [bikeService.uuid]);
+    bleno.startAdvertising(globals.BIKE_SERVICE_NAME, [bikeService.uuid])
   } else {
-    bleno.stopAdvertising();
+    bleno.stopAdvertising()
   }
 })
 

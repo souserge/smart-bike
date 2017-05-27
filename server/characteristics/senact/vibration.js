@@ -1,14 +1,15 @@
 const rpio = require('rpio')
 
-const VIBRA = 11, LED = 12
+const sensors   = require('./senactGlobals').sensors
+const actuators = require('./senactGlobals').actuators
 
-rpio.open(LED, rpio.OUTPUT, rpio.LOW)
-rpio.open(VIBRA, rpio.INPUT)
+rpio.open(actuators.LED, rpio.OUTPUT, rpio.LOW)
+rpio.open(sensors.VIBRA, rpio.INPUT)
 
 
 function main() {
-  rpio.write(LED, rpio.read(VIBRA))
-  if ( rpio.read(VIBRA)) rpio.sleep(1)
+  rpio.write(actuators.LED, rpio.read(sensors.VIBRA))
+  if ( rpio.read(sensors.VIBRA)) rpio.sleep(1)
 }
 
 setInterval(main, 42)

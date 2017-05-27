@@ -1,15 +1,13 @@
 const rpio = require('rpio')
 
-const LIGHT = 13
-
-console.log("Light: " + rpio.read(LIGHT))
+const sensors = require('./senactGlobals').sensors
 
 module.exports = {
   isOn: false,
   isAutomatic: false,
   
   init: () => {
-    rpio.open(LIGHT, rpio.INPUT)
+    rpio.open(sensors.LIGHT, rpio.INPUT)
   },
   
   set: (value) => {
