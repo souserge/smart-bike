@@ -1,7 +1,6 @@
 const bleno = require('bleno')
 
 const ids = require('../../global/ble').bleIds
-const convertData = require('../convertData')
 
 const Characteristic = bleno.Characteristic,
       Descriptor     = bleno.Descriptor
