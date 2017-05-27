@@ -29,3 +29,10 @@ class TestCharacteristic extends Characteristic {
 }
 
 module.exports = TestCharacteristic
+
+
+const obj1 = {}
+
+const app = {
+  obj1
+}
