@@ -1,6 +1,6 @@
 const bleno = require('bleno')
 
-const ids = require('../global/ble').bleIds
+const ids = require('../../global/ble').bleIds
 const lightIO = require('./senact/lightIO')
 
 const Characteristic = bleno.Characteristic,
