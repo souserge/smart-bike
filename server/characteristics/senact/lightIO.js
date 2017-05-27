@@ -31,17 +31,4 @@ const lightIO = {
   }
 }
 
-lightIO.init()
-lightIO.set(true)
-
-rpio.sleep(1)
-
-lightIO.set(false)
-lightIO.setModeAutomatic(true)
-
-
-//setInterval(() => {
-//  console.log('light sensor value:' + rpio.read(sensors.LIGHT))
-//}, 42)
-
 module.exports = lightIO

@@ -1,13 +1,13 @@
 const bleno = require('bleno')
 
-const test = require('./characteristics/test')
-const light = require('./characteristics/light')
+const TestCharacteristic = require('./characteristics/test')
+const LightCharacteristic = require('./characteristics/light')
 const ids = require('../global/ble').bleIds
 
 const PrimaryService = bleno.PrimaryService
 
-const testCharacteristic = new test.TestCharacteristic()
-const lightCharacteristic = new light.LightCharacteristic()
+const testCharacteristic  = new TestCharacteristic()
+const lightCharacteristic = new LightCharacteristic()
 
 const bikeService = new PrimaryService({
   uuid: ids.get('SERVICE').uuid,
