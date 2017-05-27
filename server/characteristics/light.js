@@ -8,13 +8,7 @@ class LightCharacteristic extends Characteristic {
   constructor() {
     super({
       uuid: 'd272',
-      properties: [ 'read', 'write'],
-      descriptors: [
-         new Descriptor({
-           uuid: '2902',
-           value: 'Light'
-         })
-      ]
+      properties: [ 'read', 'write']
     })
   
   

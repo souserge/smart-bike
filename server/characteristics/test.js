@@ -9,13 +9,7 @@ class TestCharacteristic extends Characteristic {
   constructor() {
     super({
       uuid: 'd271',
-      properties: [ 'read', 'write'],
-      descriptors: [
-         new Descriptor({
-           uuid: '2901',
-           value: 'Test'
-         })
-      ]
+      properties: [ 'read', 'write']
     }) 
   }
   
