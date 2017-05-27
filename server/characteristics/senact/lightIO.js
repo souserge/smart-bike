@@ -12,17 +12,18 @@ module.exports = {
   },
   
   set: (value) => {
+    console.log('Lights Toggled: ' + (value ? 'on' : 'off'))
     this.isOn = value
     rpio.write(actuators.LED, +value)
-    console.log('Lights Toggled: ' + (value ? 'on' : 'off'))
   },
   
   setModeAutomatic: (mode) => {
     this.isAutomatic = mode
     console.log('Lights Automatic Mode: ' + (mode ? 'on' : 'off'))
     if (mode) {
-      rpio.poll(sensors.LIGHT, (pin) => { 
-        this.set(rpio.read(pin)) // TOGGLE LIGHTS IF READ 1
+      const self = this
+      rpio.poll(sensors.LIGHT, (pin) => {
+        self.set(rpio.read(pin)) // TOGGLE LIGHTS IF READ 1
       })
     } else {
       rpio.poll(sensors.LIGHT, null)
@@ -35,3 +36,8 @@ module.exports.set(true)
 rpio.sleep(1)
 module.exports.set(false)
 module.exports.setModeAutomatic(true)
+
+
+setInterval(() => {
+  
+}, 42)
