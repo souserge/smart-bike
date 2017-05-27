@@ -14,7 +14,7 @@ module.exports = {
   set: (value) => {
     this.isOn = value
     rpio.write(actuators.LED, +value)
-    console.log('Lights Toggled: ' + (mode ? 'on' : 'off'))
+    console.log('Lights Toggled: ' + (value ? 'on' : 'off'))
   },
   
   setModeAutomatic: (mode) => {
