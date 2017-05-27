@@ -14,7 +14,7 @@ const antiTheftIO = {
   setAlarm: (value) => {
     if (value)console.log('THIEF!!!!')
     this.isOn = value
-    rpio.write(actuators.BUZZER, rpio.HIGH)
+    rpio.write(actuators.BUZZER, rpio.LOW)
     
   },
   
