@@ -16,7 +16,8 @@ const bikeService = new PrimaryService({
   uuid: ids.get('SERVICE').uuid,
   characteristics: [
     testCharacteristic,
-    lightCharacteristic
+    lightCharacteristic,
+    antiTheftCharacteristic
   ]
 });
 
