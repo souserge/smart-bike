@@ -18,7 +18,7 @@ module.exports = {
   
   setModeAutomatic: (mode) => {
     this.isAutomatic = mode
-    conslole.log('Lights Mode: ' + (mode ? 'on' : 'off'))
+    console.log('Lights Mode: ' + (mode ? 'on' : 'off'))
     if (mode) {
       rpio.poll(sensors.LIGHT, (pin) => { this.set(rpio.read(pin)) }) // TOGGLE LIGHTS IF READ 1
     } else {
