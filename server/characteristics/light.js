@@ -16,13 +16,15 @@ class LightCharacteristic extends Characteristic {
   }
   
   writeLightIO(isAutomatic, isOn) {
-    lightIO.setModeAutomatic(isAutomatic)
+    //lightIO.setModeAutomatic(isAutomatic)
     if (!isAutomatic) lightIO.set(isOn)
   }
   
   
   onWriteRequest(data, offset, withoutResponse, callback) {
     console.log('Light - WriteRequest:')
+    console.log('\tValue: ' + data)
+    console.log('\tValue: ' + !!data[0])
     this.writeLightIO(!!data[0], !!data[1])
     
     callback(this.RESULT_SUCCESS)
