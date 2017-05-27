@@ -1,5 +1,5 @@
 const bleno = require('bleno')
-const lights = require('./senact/lightIO').lights
+const lightIO = require('./senact/lightIO')
 
 const Characteristic = bleno.Characteristic,
       Descriptor     = bleno.Descriptor
@@ -18,22 +18,22 @@ class LightCharacteristic extends Characteristic {
     })
   
   
-  writeLights(isAutomatic, isOn) {
-    lights.setModeAutomatic(isAutomatic)
-    if (!isAutomatic) lights.set(isOn)
+  writeLightIO(isAutomatic, isOn) {
+    lightIO.setModeAutomatic(isAutomatic)
+    if (!isAutomatic) lightIO.set(isOn)
   }
   
   
   onWriteRequest(data, offset, withoutResponse, callback) {
     console.log('Light - WriteRequest:')
-    this.writeLights(!!data[0], !!data[1])
+    this.writeLightIO(!!data[0], !!data[1])
     
     callback(this.RESULT_SUCCESS)
   }
 
   onReadRequest(offset, callback) {
     console.log('Light - ReadRequest:')
-    const data = Buffer.from([+lights.isAutomatic, +lights.isOn])
+    const data = Buffer.from([+lightIO.isAutomatic, +lightIO.isOn])
     console.log('\tValue: ' + data)
     callback(this.RESULT_SUCCESS, data)
   } 
