@@ -3,12 +3,13 @@ const rpio = require('rpio')
 const sensors = require('./senactGlobals').sensors
 const actuators = require('./senactGlobals').actuators
 
-module.exports = {
+const lightIO = {
   isOn: false,
   isAutomatic: false,
   
   init: () => {
     rpio.open(sensors.LIGHT, rpio.INPUT)
+    rpio.open(actuators.LED, rpio.OUTPUT)
   },
   
   set: (value) => {
@@ -21,9 +22,8 @@ module.exports = {
     this.isAutomatic = mode
     console.log('Lights Automatic Mode: ' + (mode ? 'on' : 'off'))
     if (mode) {
-      const self = this
       rpio.poll(sensors.LIGHT, (pin) => {
-        self.set(rpio.read(pin)) // TOGGLE LIGHTS IF READ 1
+        lightIO.set(rpio.read(pin)) // TOGGLE LIGHTS IF READ 1
       })
     } else {
       rpio.poll(sensors.LIGHT, null)
@@ -31,13 +31,17 @@ module.exports = {
   }
 }
 
-module.exports.init()
-module.exports.set(true)
+lightIO.init()
+lightIO.set(true)
+
 rpio.sleep(1)
-module.exports.set(false)
-module.exports.setModeAutomatic(true)
+
+lightIO.set(false)
+lightIO.setModeAutomatic(true)
 
 
-setInterval(() => {
-  
-}, 42)
+//setInterval(() => {
+//  console.log('light sensor value:' + rpio.read(sensors.LIGHT))
+//}, 42)
+
+module.exports = lightIO
