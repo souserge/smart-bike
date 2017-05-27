@@ -1,6 +1,7 @@
 const rpio = require('rpio')
 
 const sensors = require('./senactGlobals').sensors
+const actuators = require('./senactGlobals').actuators
 
 module.exports = {
   isOn: false,
