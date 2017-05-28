@@ -10,12 +10,7 @@
         <!-- Include the jQuery Mobile library -->
         <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
         <!-- Include the speedometer script -->
-        <script src="js/speedometer.js"></script>
-        <script src="js/waiting.js"></script>
-        <script src="js/connect.js"></script>
-        <script src="js/disconnect.js"></script>
-        <script src="js/functions.js"></script>
-        <script src="../../global/ble.js"></script>
+
         <meta charset="utf-8">
 
         <title>Supaa bike</title>
@@ -34,15 +29,15 @@
             <p id="currentState" style="align:center; text-align:center; color:blue"></p>
         </div>
         <div id="bluetoothScreen" style="margin:0 auto; margin-left:auto; margin-right:auto; align:center; text-align:center;">
-                <a data-role="button" data-inline="true" type="submit" id="bluetoothButton">Enable Bluetooth</a>
+            <a data-role="button" data-inline="true" type="submit" id="bluetoothButton">Enable Bluetooth</a>
         </div>
-        <div class="ui-field-contain" style="margin:0 auto; margin-left:auto; margin-right:auto; align:center; text-align:center; display:none" id="toggleScreen" >
-                <select name="slider" data-role="slider" id="toggleServer" >
-                    <option value="off">Off</option>
-                    <option value="on">On</option>
-                </select>
+        <div class="ui-field-contain" style="margin:0 auto; margin-left:auto; margin-right:auto; align:center; text-align:center;" id="toggleScreen" >
+            <select name="slider" data-role="slider" id="toggleServer">
+                <option value="off" selected>Off</option>
+                <option value="on">On</option>
+            </select>
         </div>
-        
+
         <div id="statsScreen" style="display:none">
             <p id="statsState"></p>
             <canvas id="canvasId" width="220" height="110">//0.5
@@ -64,8 +59,22 @@
                     </tr>
                 </tbody>
             </table>
+            <div id="light" style="display:none">
+                <select name="slider" data-role="slider" id="lightToggler" >
+                    <option value="off">Off</option>
+                    <option value="on">On</option>
+                </select>
+                <a data-role="button" data-inline="true" type="submit" id="autoButton">Enable auto</a>
+            </div>
         </div>
+
+        <script src="js/ble.js"></script>
+        <script src="js/functions.js"></script>
+        <script src="js/speedometer.js"></script>
+        <script src="js/waiting.js"></script>
+        <script src="js/connect.js"></script>
+        <script src="js/disconnect.js"></script>
         <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
+        <script src="js/index.js"></script>
     </body>
 </html>
