@@ -37,19 +37,22 @@ const deviceConnecting={
         deviceConnecting.connectedPeripheral = peripheral;
         let targetSpeed="";
         let message="Hello world";
-        let currentPosition = deviceFunctions.getLocation()
-        let currentWeather = deviceFunctions.getWeather(currentPosition['latitude'],currentPosition['longitude'])
+        let currentPosition = deviceLocation.getLocation()
+        let currentWeather = deviceLocation.getWeather(currentPosition['latitude'],currentPosition['longitude'])
+
         
+
+
         ble.write(deviceConnecting.connectedPeripheral.id,bleIds.get('SERVICE').uuid,bleIds.get('TEST_CH').uuid,deviceFunctions.stringToArrayBuffer(message));
 
         ble.read(deviceConnecting.connectedPeripheral.id, bleIds.get('SERVICE').uuid, bleIds.get('TEST_CH').uuid, (valueArrBuf) => {
             targetSpeed = deviceFunctions.bytesToString(valueArrBuf)
             deviceFunctions.showStats(targetSpeed)
         })
-        
+
         //ble.notify(app.connectedPeripheral.id, bleIds.get('SERVICE').uuid, bleIds.get('SERVICE').uuid, app.onData);
 
     }
-    
+
 
 }

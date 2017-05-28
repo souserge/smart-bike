@@ -64,58 +64,8 @@ const deviceFunctions={
         let doAnimation=false;
         drawSpeedometer(speed, canvasId, doAnimation);
 
-    },
-    getLocation:function() {
-        navigator.geolocation.getCurrentPosition(
-            function(position) {
-                return{
-                    "latitude":position.coords.latitude,
-                    "longitude":position.coords.longitude ,
-                    "altitude":position.coords.altitude,
-                    "accuracy":position.coords.accuracy,
-                    "altitude accuracy":position.coords.altitudeAccuracy,
-                    "heading":position.coords.heading,
-                    "speed":position.coords.speed,
-                    "timestamp":position.timestamp
-                }
-            },
-
-            function onError(error) {
-                deficeFunctions.showCurrentState("Location error")
-            },
-            {enableHighAccuracy: true}
-        )
-    },
-    getWeather:function(latitude, longitude){
-
-        var queryString =
-            'http://api.openweathermap.org/data/2.5/weather?lat='+ latitude + '&lon=' + longitude + '&appid=' + weatherKey + '&units=imperial';
-
-        $.getJSON(queryString, function (results) {
-            if (results.weather.length) {
-                $.getJSON(queryString, function (results) {
-                    if (results.weather.length) {
-                        return{
-                            "description":results.name,
-                            "temp":results.main.temp,
-                            "wind":results.wind.speed,
-                            "humidity":results.main.humidity,
-                            "visibility":results.weather[0].main,
-                            var sunriseDate = new Date(results.sys.sunrise)
-                            "sunrise":sunriseDate.toLocaleTimeString(),
-                            var sunsetDate = new Date(results.sys.sunrise);
-                            "sunset":sunsetDate.toLocaleTimeString(),
-                        }
-                    }
-                });
-            }
-        }).fail(function () {
-            deficeFunctions.showCurrentState("Weather error")
-        });
     }
-
-
-
-}
+    
 
 }
+
