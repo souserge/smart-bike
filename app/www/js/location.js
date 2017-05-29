@@ -8,7 +8,7 @@ const deviceLocation{
                     "longitude":position.coords.longitude ,
                     "altitude":position.coords.altitude,
                     "accuracy":position.coords.accuracy,
-                    "altitude accuracy":position.coords.altitudeAccuracy,
+                    "altitudeAccuracy":position.coords.altitudeAccuracy,
                     "heading":position.coords.heading,
                     "speed":position.coords.speed,
                     "timestamp":position.timestamp
@@ -24,7 +24,7 @@ const deviceLocation{
 
         getWeather:function(latitude, longitude){
 
-            var queryString =
+            let queryString =
                 'http://api.openweathermap.org/data/2.5/weather?lat='+ latitude + '&lon=' + longitude + '&appid=' + weatherKey + '&units=imperial';
 
             $.getJSON(queryString, function (results) {
@@ -34,7 +34,6 @@ const deviceLocation{
                             let sunriseDate = new Date(results.sys.sunrise)
                             let sunsetDate = new Date(results.sys.sunset)
                             return{
-
                                 "description":results.name,
                                 "temp":results.main.temp,
                                 "wind":results.wind.speed,
@@ -47,81 +46,57 @@ const deviceLocation{
                     });
                 }
             }).fail(function () {
-                deficeFunctions.showCurrentState("Weather error")
+                deviceFunctions.showCurrentState('code: ' + error.code + ',' +
+                                                 'message: ' + error.message)
             });
         },
-            // Get geo coordinates
 
-            getMapLocation:function() {
+            getMap:function(latitude, longitude){
 
-                navigator.geolocation.getCurrentPosition
-                (onMapSuccess, onMapError, { enableHighAccuracy: true });
+                let mapOptions = {
+                    center: new google.maps.LatLng(0, 0),
+                    zoom: 1,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+
+                map = new google.maps.Map
+                (document.getElementById("map"), mapOptions);
+
+
+                let latLong = new google.maps.LatLng(latitude, longitude);
+
+                let marker = new google.maps.Marker({
+                    position: latLong
+                });
+
+                marker.setMap(map);
+                map.setZoom(15);
+                map.setCenter(marker.getPosition());
             },
 
-                // Success callback for get geo coordinates
-
-                var onMapSuccess = function (position) {
-
-                    Latitude = position.coords.latitude;
-                    Longitude = position.coords.longitude;
-
-                    getMap(Latitude, Longitude);
-
-                }
-
-                // Get map by using coordinates
-
-                function getMap(latitude, longitude) {
-
-                    var mapOptions = {
-                        center: new google.maps.LatLng(0, 0),
-                        zoom: 1,
-                        mapTypeId: google.maps.MapTypeId.ROADMAP
-                    };
-
-                    map = new google.maps.Map
-                    (document.getElementById("map"), mapOptions);
 
 
-                    var latLong = new google.maps.LatLng(latitude, longitude);
+                watchMapPosition:function(){
 
-                    var marker = new google.maps.Marker({
-                        position: latLong
-                    });
+                    return navigator.geolocation.watchPosition
+                    (
+                        function(){let updatedLatitude = position.coords.latitude;
+                                   let updatedLongitude = position.coords.longitude;
 
-                    marker.setMap(map);
-                    map.setZoom(15);
-                    map.setCenter(marker.getPosition());
+                                   if (updatedLatitude != Latitude && updatedLongitude != Longitude) {
+
+                                       Latitude = updatedLatitude;
+                                       Longitude = updatedLongitude;
+
+                                       getMap(updatedLatitude, updatedLongitude);
+                                   }}, function(){deviceFunctions.showCurrentState('code: ' + error.code + ',' +
+                                                                                   'message: ' + error.message)}, { enableHighAccuracy: true,timeout: 30000 });
                 },
 
-                    // Success callback for watching your changing position
+                    stopWatchingLocation:function(watchID){
+                        navigator.geolocation.clearWatch(watchID);
 
-                    var onMapWatchSuccess = function (position) {
-
-                        var updatedLatitude = position.coords.latitude;
-                        var updatedLongitude = position.coords.longitude;
-
-                        if (updatedLatitude != Latitude && updatedLongitude != Longitude) {
-
-                            Latitude = updatedLatitude;
-                            Longitude = updatedLongitude;
-
-                            getMap(updatedLatitude, updatedLongitude);
-                        }
                     }
 
-                    // Error callback
 
-                    function onMapError(error) {
-                        console.log('code: ' + error.code + '\n' +
-                                    'message: ' + error.message + '\n');
-                    }
-
-    // Watch your changing position
-
-    function watchMapPosition() {
-
-        return navigator.geolocation.watchPosition
-        (onMapWatchSuccess, onMapError, { enableHighAccuracy: true });
-    }
 }

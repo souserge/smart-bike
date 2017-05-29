@@ -13,4 +13,6 @@
     <preference name="Orientation" value="portrait" />
     <preference name="DisallowOverscroll" value="true" />
     <plugin name="cordova-plugin-geolocation" spec="~2.4.3" />
+    <plugin name="cordova-plugin-tts" spec="~0.2.3" />
+    <plugin name="org.apache.cordova.speech.speechrecognition" spec="https://github.com/macdonst/SpeechRecognitionPlugin" />
 </widget>
