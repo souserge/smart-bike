@@ -48,7 +48,7 @@ const deviceFunctions={
         $("#statsScreen").show()
         $("#lightScreen").show()
         $("#speechScreen").show()
-         $("#acelScreen").show()
+        $("#acelScreen").show()
 
         const lightUuid =  bleIds.get('LIGHT_CH').uuid
         $("#lightToggler").change(() => {
@@ -58,40 +58,44 @@ const deviceFunctions={
             ble.write(deviceConnecting.connectedPeripheral.id, bleIds.get('SERVICE').uuid, lightUuid, data.buffer)
         })
 
-        let targetSpeed="";
+        let targetSpeed="50";
         let message="Hello world";
 
-        //getLocation:[latitude,longitude,altitude,accuracy,altitudeAccuracy, heading,speed,timestamp]
-        let currentPosition = deviceLocation.getLocation()
-        //getWeather:[description,temp,wind,humidity,visibility,sunrise,sunset]
-        let currentWeather = deviceLocation.getWeather(currentPosition['latitude'],currentPosition['longitude'])
-        deviceLocation.getMap(currentPosition['latitude'],currentPosition['longitude'])
-        let watchID=deviceLocation.watchMapPosition()
-        deviceLocation.stopWatchingLocation(watchID)
+//        //getLocation:[latitude,longitude,altitude,accuracy,altitudeAccuracy, heading,speed,timestamp]
+//        var currentPosition = deviceLocation.getLocation()
+//        //getWeather:[description,temp,wind,humidity,visibility,sunrise,sunset]
+//        
+//        let currentWeather = deviceLocation.getWeather(currentPosition.latitude,currentPosition.longitude)
+//        deviceLocation.getMap(currentPosition.latitude,currentPosition.longitude)
+//        let watchID=deviceLocation.watchMapPosition()
+//        deviceLocation.stopWatchingLocation(watchID)
 
-        ble.write(deviceConnecting.connectedPeripheral.id,bleIds.get('SERVICE').uuid,bleIds.get('TEST_CH').uuid,deviceFunctions.stringToArrayBuffer(message));
+        //        ble.write(deviceConnecting.connectedPeripheral.id,bleIds.get('SERVICE').uuid,bleIds.get('TEST_CH').uuid,deviceFunctions.stringToArrayBuffer(message));
+        //
+        //        ble.read(deviceConnecting.connectedPeripheral.id, bleIds.get('SERVICE').uuid, bleIds.get('TEST_CH').uuid, (valueArrBuf) => {
+        //            targetSpeed = deviceFunctions.bytesToString(valueArrBuf)
+        //        });
+        //ble.notify(app.connectedPeripheral.id, bleIds.get('SERVICE').uuid, bleIds.get('SERVICE').uuid, app.onData);
 
-        ble.read(deviceConnecting.connectedPeripheral.id, bleIds.get('SERVICE').uuid, bleIds.get('TEST_CH').uuid, (valueArrBuf) => {
-            targetSpeed = deviceFunctions.bytesToString(valueArrBuf)
-            //ble.notify(app.connectedPeripheral.id, bleIds.get('SERVICE').uuid, bleIds.get('SERVICE').uuid, app.onData);
-
-            let avgspeed=12;
-            let distance=12;
-            $("#speedCell").text(targetSpeed+" km/h")
-            $("#avgspeedCell").text(avgspeed+" km/h")
-            $("#distanceCell").text(distance+" km")
-            $("#speedLabel").text("Speed")
-            $("#avgspeedLabel").text("Avg speed")
-            $("#distanceLabel").text("Distance")
-
-
-
-            let canvasId="canvasId";
-            let doAnimation=false;
-            drawSpeedometer(targetSpeed, canvasId, doAnimation);
-
-        }
+        let avgspeed=12;
+        let distance=12;
+        $("#speedCell").text(targetSpeed+" km/h")
+        $("#avgspeedCell").text(avgspeed+" km/h")
+        $("#distanceCell").text(distance+" km")
+        $("#speedLabel").text("Speed")
+        $("#avgspeedLabel").text("Avg speed")
+        $("#distanceLabel").text("Distance")
 
 
-                 }
+
+        let canvasId="canvasId";
+        let doAnimation=false;
+        drawSpeedometer(targetSpeed, canvasId, doAnimation);
+
+
+
+
+    }
+}
+
 

@@ -1,18 +1,19 @@
-const deviceLocation{
+const deviceLocation={
 
     getLocation:function() {
         navigator.geolocation.getCurrentPosition(
             function(position) {
-                return{
+                let locationInfo={
                     "latitude":position.coords.latitude,
                     "longitude":position.coords.longitude ,
-                    "altitude":position.coords.altitude,
+                    "altitude":position.coords.altitude,//null
                     "accuracy":position.coords.accuracy,
-                    "altitudeAccuracy":position.coords.altitudeAccuracy,
-                    "heading":position.coords.heading,
-                    "speed":position.coords.speed,
+                    "altitudeAccuracy":position.coords.altitudeAccuracy,//null
+                    "heading":position.coords.heading,//null
+                    "speed":position.coords.speed,//null
                     "timestamp":position.timestamp
                 }
+                deviceLocation.getWeather(locationInfo.latitude,locationInfo.longitude)
             },
 
             function onError(error) {
@@ -33,7 +34,7 @@ const deviceLocation{
                         if (results.weather.length) {
                             let sunriseDate = new Date(results.sys.sunrise)
                             let sunsetDate = new Date(results.sys.sunset)
-                            return{
+                            let weatherInfo={
                                 "description":results.name,
                                 "temp":results.main.temp,
                                 "wind":results.wind.speed,
@@ -42,6 +43,7 @@ const deviceLocation{
                                 "sunrise":sunriseDate.toLocaleTimeString(),
                                 "sunset":sunsetDate.toLocaleTimeString()
                             }
+                            getMap(latitude,longitude)
                         }
                     });
                 }
@@ -60,7 +62,7 @@ const deviceLocation{
                 };
 
                 map = new google.maps.Map
-                (document.getElementById("map"), mapOptions);
+                (document.getElementById("mapScreen"), mapOptions);
 
 
                 let latLong = new google.maps.LatLng(latitude, longitude);
