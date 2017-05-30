@@ -1,7 +1,5 @@
 //bleIds.get("SERVICE").uuid
 const bleIds = new Map()
-const weatherKey="aa928f2867a6ea5b7bd2e4a51dcb7146"
-const mapsKey="AIzaSyBidFVzXcpLw5WSpeJmXoZEMpuGuPtsb68"
 class BleId {
     constructor(name, uuid) {
         this.name = name

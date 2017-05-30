@@ -61,10 +61,11 @@ const deviceFunctions={
         let targetSpeed="50";
         let message="Hello world";
 
-//        //getLocation:[latitude,longitude,altitude,accuracy,altitudeAccuracy, heading,speed,timestamp]
-//        var currentPosition = deviceLocation.getLocation()
-//        //getWeather:[description,temp,wind,humidity,visibility,sunrise,sunset]
-//        
+        //getLocation:[latitude,longitude,altitude,accuracy,altitudeAccuracy, heading,speed,timestamp]
+        //let currentPosition = getLocation()
+        //getWeather:[description,temp,wind,humidity,visibility,sunrise,sunset]
+       
+        deviceLocation.getLocation()
 //        let currentWeather = deviceLocation.getWeather(currentPosition.latitude,currentPosition.longitude)
 //        deviceLocation.getMap(currentPosition.latitude,currentPosition.longitude)
 //        let watchID=deviceLocation.watchMapPosition()

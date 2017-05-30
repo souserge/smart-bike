@@ -4,7 +4,7 @@ const deviceWaiting = {
     },
     waitingForBluetooth: function() {
         ble.isEnabled(deviceWaiting.onDeviceReady)
-
+        deviceFunctions.showEverything();
         deviceFunctions.showCurrentState("Please, enable Bluetooth")
         bluetoothButton.ontouchstart=deviceWaiting.onDeviceReady
     },

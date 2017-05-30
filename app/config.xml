@@ -1,11 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.thebluetoothbook.blelock" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>BLE Lock</name>
+    <name>Supaa bike</name>
     <description>
-      A sample Apache Cordova application that unlocks a solenoid lock via Bluetooth Low Energy
     </description>
-    <author href="https://github.com/don">
-        Don Coleman
+    <author>
     </author>
     <content src="index.html" />
     <access origin="*" />
@@ -16,4 +13,3 @@
     <plugin name="cordova-plugin-tts" spec="~0.2.3" />
     <plugin name="cordova-plugin-media" spec="https://github.com/apache/cordova-plugin-media" />
     <plugin name="cordova-plugin-speechrecognition" spec="~1.1.2" />
-</widget>
