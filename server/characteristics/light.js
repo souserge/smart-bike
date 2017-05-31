@@ -16,23 +16,26 @@ class LightCharacteristic extends Characteristic {
   }
   
   writeLightIO(isAutomatic, isOn) {
-    //lightIO.setModeAutomatic(isAutomatic)
+    lightIO.setModeAutomatic(isAutomatic)
     if (!isAutomatic) lightIO.set(isOn)
   }
   
   
   onWriteRequest(data, offset, withoutResponse, callback) {
     console.log('Light - WriteRequest:')
-    console.log('\tValue: ' + data)
-    console.log('\tValue: ' + !!data[0])
-    this.writeLightIO(!!data[0], !!data[1])
+    let isAutomatic = data.readUInt8(0)
+    let isOn = data.readUInt8(1)
+    console.log("IsAuto: " + isAutomatic + "; IsOn: " + isOn)
+    this.writeLightIO(!!isAutomatic, !!isOn)
     
     callback(this.RESULT_SUCCESS)
   }
 
   onReadRequest(offset, callback) {
     console.log('Light - ReadRequest:')
-    const data = Buffer.from([+lightIO.isAutomatic, +lightIO.isOn])
+    let data = Buffer.allocUnsafe(2) 
+    data.writeUInt8(+lightIO.isAutomatic, 0)
+    data.writeUInt8(+lightIO.isOn, 1)
     console.log('\tValue: ' + data)
     callback(this.RESULT_SUCCESS, data)
   } 
