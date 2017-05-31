@@ -30,8 +30,8 @@ const deviceFunctions={
         $("#statsScreen").hide()
         $("#acelScreen").hide()
         $("#lightScreen").hide()
-        $("locationScreen").hide()
-        $("weatherScreen").hide()
+        $("#locationScreen").hide()
+        $("#weatherScreen").hide()
         $("#mapScreen").hide()
 
     },
@@ -43,8 +43,8 @@ const deviceFunctions={
         $("#acelScreen").hide()
         $("#lightScreen").hide()
         $("#mapScreen").hide()
-        $("locationScreen").hide()
-        $("weatherScreen").hide()
+        $("#locationScreen").hide()
+        $("#weatherScreen").hide()
 
     },
 
