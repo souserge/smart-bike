@@ -19,15 +19,15 @@ const lightIO = {
   },
   
   setModeAutomatic: (mode) => {
-    this.isAutomatic = mode
     console.log('Lights Automatic Mode: ' + (mode ? 'on' : 'off'))
     if (mode) {
       rpio.poll(sensors.LIGHT, (pin) => {
         lightIO.set(rpio.read(pin)) // TOGGLE LIGHTS IF READ 1
       })
-    } else {
+    } else if (this.isAutomatic) { // TODO: fix it gracefully
       rpio.poll(sensors.LIGHT, null)
     }
+    this.isAutomatic = mode
   }
 }
 

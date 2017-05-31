@@ -15,16 +15,17 @@ class LightCharacteristic extends Characteristic {
   }
   
   writeLightIO(isAutomatic, isOn) {
-    //lightIO.setModeAutomatic(isAutomatic)
+    lightIO.setModeAutomatic(isAutomatic)
     if (!isAutomatic) lightIO.set(isOn)
   }
   
   
   onWriteRequest(data, offset, withoutResponse, callback) {
     console.log('Light - WriteRequest:')
-    console.log(data)
-    let isAutomatic = +data[0]
-    let isOn = +data[1]
+    let strData = data.toString('utf8')
+    console.log(strData)
+    let isAutomatic = +strData[0]
+    let isOn = +strData[1]
     console.log("IsAuto: " + isAutomatic + "; IsOn: " + isOn)
     this.writeLightIO(!!isAutomatic, !!isOn)
     

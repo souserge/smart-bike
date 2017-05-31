@@ -7,6 +7,7 @@ const antiTheftIO = {
   isOn: false,
   isSignaling: false,
   
+  
   init: () => {
     rpio.open(sensors.VIBRA, rpio.INPUT)
     rpio.open(actuators.BUZZER, rpio.OUTPUT, rpio.LOW)
