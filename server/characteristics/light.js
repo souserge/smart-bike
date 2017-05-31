@@ -15,7 +15,7 @@ class LightCharacteristic extends Characteristic {
   }
   
   writeLightIO(isAutomatic, isOn) {
-    lightIO.setModeAutomatic(isAutomatic)
+    //lightIO.setModeAutomatic(isAutomatic)
     if (!isAutomatic) lightIO.set(isOn)
   }
   
