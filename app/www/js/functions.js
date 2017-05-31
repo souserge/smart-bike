@@ -23,6 +23,9 @@ const deviceFunctions={
     bytesToString:function(buffer) {
         return String.fromCharCode.apply(null, new Uint8Array(buffer))
     },
+    toggleMap:function(){
+        $("#mapScreen").toggle()
+    },
     showButton:function(){
         $("#bluetoothScreen").show()
         $("#toggleScreen").hide() 
@@ -30,6 +33,7 @@ const deviceFunctions={
         $("#acelScreen").hide()
         $("#speechScreen").hide()
         $("#lightScreen").hide()
+        $("#mapButton").hide()
     },
     showToggle:function(){
         $("#bluetoothScreen").hide()
@@ -39,6 +43,7 @@ const deviceFunctions={
         $("#acelScreen").hide()
         $("#speechScreen").hide()
         $("#lightScreen").hide()
+        $("#mapScreen").hide()
 
     },
 
@@ -49,6 +54,8 @@ const deviceFunctions={
         $("#lightScreen").show()
         $("#speechScreen").show()
         $("#acelScreen").show()
+        $("#mapScreen").show()
+        
 
         const lightUuid =  bleIds.get('LIGHT_CH').uuid
         $("#lightToggler").change(() => {
@@ -58,18 +65,13 @@ const deviceFunctions={
             ble.write(deviceConnecting.connectedPeripheral.id, bleIds.get('SERVICE').uuid, lightUuid, data.buffer)
         })
 
-        let targetSpeed="50";
+        let targetSpeed="";
+        let avgspeed="";
+        let distance="";
         let message="Hello world";
 
-        //getLocation:[latitude,longitude,altitude,accuracy,altitudeAccuracy, heading,speed,timestamp]
-        //let currentPosition = getLocation()
-        //getWeather:[description,temp,wind,humidity,visibility,sunrise,sunset]
        
         deviceLocation.getLocation()
-//        let currentWeather = deviceLocation.getWeather(currentPosition.latitude,currentPosition.longitude)
-//        deviceLocation.getMap(currentPosition.latitude,currentPosition.longitude)
-//        let watchID=deviceLocation.watchMapPosition()
-//        deviceLocation.stopWatchingLocation(watchID)
 
         //        ble.write(deviceConnecting.connectedPeripheral.id,bleIds.get('SERVICE').uuid,bleIds.get('TEST_CH').uuid,deviceFunctions.stringToArrayBuffer(message));
         //
@@ -78,8 +80,7 @@ const deviceFunctions={
         //        });
         //ble.notify(app.connectedPeripheral.id, bleIds.get('SERVICE').uuid, bleIds.get('SERVICE').uuid, app.onData);
 
-        let avgspeed=12;
-        let distance=12;
+        
         $("#speedCell").text(targetSpeed+" km/h")
         $("#avgspeedCell").text(avgspeed+" km/h")
         $("#distanceCell").text(distance+" km")

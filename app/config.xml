@@ -1,8 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
+<widget id="com.phonegap.helloworld" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>Supaa bike</name>
     <description>
+        A great PhoneGap app.
     </description>
-    <author>
+    <author email="support@phonegap.com" href="http://phonegap.com">
     </author>
     <content src="index.html" />
     <access origin="*" />
@@ -13,3 +15,6 @@
     <plugin name="cordova-plugin-tts" spec="~0.2.3" />
     <plugin name="cordova-plugin-media" spec="https://github.com/apache/cordova-plugin-media" />
     <plugin name="cordova-plugin-speechrecognition" spec="~1.1.2" />
+    <access origin="*" />
+    </widget>
+
