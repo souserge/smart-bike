@@ -22,8 +22,8 @@ class LightCharacteristic extends Characteristic {
   
   onWriteRequest(data, offset, withoutResponse, callback) {
     console.log('Light - WriteRequest:')
-    let isAutomatic = data.readUInt8(0)
-    let isOn = data.readUInt8(1)
+    let isAutomatic = +data[0]
+    let isOn = +data[1]
     console.log("IsAuto: " + isAutomatic + "; IsOn: " + isOn)
     this.writeLightIO(!!isAutomatic, !!isOn)
     
