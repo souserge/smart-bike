@@ -12,7 +12,6 @@ class LightCharacteristic extends Characteristic {
       uuid: ids.get('LIGHT_CH').uuid,
       properties: [ 'read', 'write']
     })
-    lightIO.init()
   }
   
   writeLightIO(isAutomatic, isOn) {

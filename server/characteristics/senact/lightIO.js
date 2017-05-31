@@ -31,4 +31,5 @@ const lightIO = {
   }
 }
 
+lightIO.init()
 module.exports = lightIO
