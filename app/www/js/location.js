@@ -29,6 +29,11 @@ const deviceLocation={
             "speed":position.coords.speed,//null
             "timestamp":position.timestamp
         }
+        $("#latitudeCell").text(locationInfo.latitude)
+        $("#longitudeCell").text(locationInfo.longitude)
+        $("#latitudeLabel").text("Latitude")
+        $("#longitudeLabel").text("Longitude")
+
         let weatherKey="aa928f2867a6ea5b7bd2e4a51dcb7146"
         let queryString =
             'http://api.openweathermap.org/data/2.5/weather?lat='+ locationInfo.latitude + '&lon=' + locationInfo.longitude + '&appid=' + weatherKey + '&units=imperial' //implement protection of max 60 time/minute
@@ -51,6 +56,23 @@ const deviceLocation={
                             "sunrise":sunriseDate.toLocaleTimeString(),
                             "sunset":sunsetDate.toLocaleTimeString()
                         }
+
+                        $("#nameCell").text(weatherInfo.description)
+                        $("#tempCell").text(weatherInfo.temp)
+                        $("#windCell").text(weatherInfo.wind)
+                        $("#humidityCell").text(weatherInfo.humidity)
+                        $("#visibilityCell").text(weatherInfo.visibility)
+                        $("#sunriseCell").text(weatherInfo.sunrise)
+                        $("#sunsetCell").text(weatherInfo.sunset)
+
+                        $("#nameLabel").text("Name")
+                        $("#tempLabel").text("Temperature")
+                        $("#windLabel").text("Wind")
+                        $("#HumidityLabel").text("Humidity")
+                        $("#VisibilityLabel").text("Visibility")
+                        $("#sunriseLabel").text("Sunrise")
+                        $("#sunsetLabel").text("Sunset")
+
                         let mapOptions = {
                             center: new google.maps.LatLng(0, 0),
                             zoom: 1,

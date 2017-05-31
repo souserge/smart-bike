@@ -18,7 +18,7 @@
 
 
     <body>
-        <div id="debug" >Debug info here</div> 
+<!--        <div id="debug" >Debug info here</div> -->
 
         <div>
             <p id="currentState" style="align:center; text-align:center; color:blue"></p>
@@ -41,39 +41,89 @@
             </canvas>
         </div>
         <div align="center" id="statsScreen">
-            <table align="center" style="width:200px">
+            <table align="center" style="width:200px margin:0 auto; margin-left:auto; margin-right:auto; align:center;margin-bottom:10px;margin-top:10px; text-align:center;">
                 <tr>
-                    <th id="speedLabel">Speed:</th>
-                    <td id="speedCell">0 km/h</td>
+                    <th id="speedLabel"></th>
+                    <td id="speedCell"></td>
                 </tr>
                 <tr>
-                    <th id="avgspeedLabel">Avg Speed:</th>
-                    <td id="avgspeedCell">0 km/h</td>
+                    <th id="avgspeedLabel"></th>
+                    <td id="avgspeedCell"></td>
                 </tr>
                 <tr>
-                    <th id="distanceLabel">Distance</th>
-                    <td id="distanceCell">0 km</td>
+                    <th id="distanceLabel"></th>
+                    <td id="distanceCell"></td>
                 </tr>
             </table>
 
         </div>
+        <div align="center" id="locationScreen">
+            <table align="center" style="width:200px; margin:0 auto; margin-left:auto; margin-right:auto; margin-bottom:10px; align:center; text-align:center;">
+                <tr>
+                    <th id="latitudeLabel"></th>
+                    <td id="latitudeCell"></td>
+                </tr>
+                <tr>
+                    <th id="longitudeLabel"></th>
+                    <td id="longitudeCell"></td>
+                </tr>
 
+            </table>
+
+        </div>
+
+        <div align="center" id="weatherScreen">
+            <table align="center" style="width:200px; margin:0 auto; margin-left:auto; margin-right:auto; margin-bottom:10px; align:center; text-align:center;" >
+                <tr>
+                    <th id="nameLabel"></th>
+                    <td id="nameCell"></td>
+                </tr>
+                <tr>
+                    <th id="tempLabel"></th>
+                    <td id="tempCell"></td>
+                </tr>
+                <tr>
+                    <th id="windLabel"></th>
+                    <td id="windCell"></td>
+                </tr>
+                <tr>
+                    <th id="humidityLabel"></th>
+                    <td id="humidityCell"></td>
+                </tr>
+                <tr>
+                    <th id="visibilityLabel"></th>
+                    <td id="visibilityCell"></td>
+                </tr>
+                <tr>
+                    <th id="sunriseLabel"></th>
+                    <td id="sunriseCell"></td>
+                </tr>
+                <tr>
+                    <th id="sunsetLabel"></th>
+                    <th id="sunsetLabel"></th>
+                    <td id="sunsetCell"></td>
+                </tr>
+                
+
+            </table>
+
+        </div>
         <div align="center" id="lightScreen">
+            <label for="lightToggler">Toggle light</label>
             <select  name="slider" data-role="slider" id="lightToggler" >
                 <option value="off">Off</option>
                 <option value="on">On</option>
             </select>
-            <a data-role="button" data-inline="true" type="submit" id="autoButton">Enable auto</a>
+            <label for="autoToggler">Automatic mode</label>
+            <select  name="slider" data-role="slider" id="autoToggler" >
+                <option value="off">Off</option>
+                <option value="on">On</option>
+            </select>
         </div>
-        <div>
-            <a data-role="button" data-inline="true" type="submit" id="mapButton">Show location</a>
-        </div>
+
         <div id="mapScreen" style="width: 357px; height: 300px;">
         </div>
 
-        <div id="speechScreen">
-
-        </div>
 
 
         <script type="text/javascript" src="cordova.js"></script>

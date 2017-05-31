@@ -8,6 +8,7 @@ const deviceConnecting={
             },
             function() {
                 ble.enable();
+                
             }
         );
     },

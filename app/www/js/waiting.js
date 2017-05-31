@@ -4,7 +4,7 @@ const deviceWaiting = {
     },
     waitingForBluetooth: function() {
         ble.isEnabled(deviceWaiting.onDeviceReady)
-        deviceFunctions.showEverything()
+        //deviceFunctions.showEverything()
         deviceFunctions.showCurrentState("Please, enable Bluetooth")
         bluetoothButton.ontouchstart=deviceWaiting.onDeviceReady
     },
@@ -23,6 +23,15 @@ const deviceWaiting = {
 
     onDeviceWaiting: function(){
         deviceFunctions.showCurrentState("Tap to connect")
+        
+        recognition = new SpeechRecognition();
+        recognition.onresult = function(event) {
+            if (event.results.length > 0) {
+                q.value = event.results[0][0].transcript;
+                q.form.submit();
+            }
+        }
+
         $("#toggleServer").change(function() {
             deviceFunctions.checkBluetooth()
             state = $("#toggleServer").val()

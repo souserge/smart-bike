@@ -13,9 +13,9 @@ const deviceFunctions={
         }
         return ret.buffer
     },
-    showDebug:function(text) {
-        $("#debug").text(text)
-    },
+//    showDebug:function(text) {
+//        $("#debug").text(text)
+//    },
     showCurrentState:function(text) {
         $("#currentState").text(text)
     },
@@ -23,17 +23,17 @@ const deviceFunctions={
     bytesToString:function(buffer) {
         return String.fromCharCode.apply(null, new Uint8Array(buffer))
     },
-    toggleMap:function(){
-        $("#mapScreen").toggle()
-    },
+
     showButton:function(){
         $("#bluetoothScreen").show()
         $("#toggleScreen").hide() 
         $("#statsScreen").hide()
         $("#acelScreen").hide()
-        $("#speechScreen").hide()
         $("#lightScreen").hide()
-        $("#mapButton").hide()
+        $("locationScreen").hide()
+        $("weatherScreen").hide()
+        $("#mapScreen").hide()
+
     },
     showToggle:function(){
         $("#bluetoothScreen").hide()
@@ -41,9 +41,10 @@ const deviceFunctions={
         $("#toggleScreen").show()
         $("#statsScreen").hide()
         $("#acelScreen").hide()
-        $("#speechScreen").hide()
         $("#lightScreen").hide()
         $("#mapScreen").hide()
+        $("locationScreen").hide()
+        $("weatherScreen").hide()
 
     },
 
@@ -52,16 +53,21 @@ const deviceFunctions={
         $("#toggleScreen").hide()
         $("#statsScreen").show()
         $("#lightScreen").show()
-        $("#speechScreen").show()
+        $("locationScreen").show()
         $("#acelScreen").show()
         $("#mapScreen").show()
+        $("weatherScreen").show()
+       
         
-
+            
         const lightUuid =  bleIds.get('LIGHT_CH').uuid
+        const data = new Uint32Array([0, 0])
         $("#lightToggler").change(() => {
-            const data = new Uint32Array([0, 1])
-            //// data[0] = 0
-            // data[1] = ($("#lightToggler").val() == "on" ? 1 : 0)
+            data[1] = ($("#lightToggler").val() == "on" ? 1 : 0)
+            ble.write(deviceConnecting.connectedPeripheral.id, bleIds.get('SERVICE').uuid, lightUuid, data.buffer)
+        })
+        $("#autoToggler").change(() => {
+            data[0] = ($("#lightToggler").val() == "on" ? 1 : 0)
             ble.write(deviceConnecting.connectedPeripheral.id, bleIds.get('SERVICE').uuid, lightUuid, data.buffer)
         })
 
