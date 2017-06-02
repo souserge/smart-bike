@@ -1,3 +1,6 @@
+String.prototype.replaceAt=function(index, replacement) {
+    return this.substr(0, index) + replacement+ this.substr(index + replacement.length);}
+
 const deviceFunctions={
     checkBluetooth: function(){
         ble.isEnabled("",
@@ -13,9 +16,9 @@ const deviceFunctions={
         }
         return ret.buffer
     },
-//    showDebug:function(text) {
-//        $("#debug").text(text)
-//    },
+    //    showDebug:function(text) {
+    //        $("#debug").text(text)
+    //    },
     showCurrentState:function(text) {
         $("#currentState").text(text)
     },
@@ -48,35 +51,39 @@ const deviceFunctions={
 
     },
 
+
     showEverything: function() {
         $("#bluetoothScreen").hide()
-        $("#toggleScreen").hide()
+
         $("#statsScreen").show()
         $("#lightScreen").show()
-        $("locationScreen").show()
+        $("#locationScreen").show()
         $("#acelScreen").show()
         $("#mapScreen").show()
-        $("weatherScreen").show()
-       
-        
-            
+        $("#weatherScreen").show()
+
+
+
         const lightUuid =  bleIds.get('LIGHT_CH').uuid
-        const data = new Uint32Array([0, 0])
+        let data = ["0","0"]
         $("#lightToggler").change(() => {
-            data[1] = ($("#lightToggler").val() == "on" ? 1 : 0)
-            ble.write(deviceConnecting.connectedPeripheral.id, bleIds.get('SERVICE').uuid, lightUuid, data.buffer)
+            data[1] = ($("#lightToggler").val() == "on" ? "1" : "0")
+
+            ble.write(deviceConnecting.connectedPeripheral.id, bleIds.get('SERVICE').uuid, lightUuid, arrayToArrayBuffer(data))
+            alert(data)
+
         })
         $("#autoToggler").change(() => {
-            data[0] = ($("#lightToggler").val() == "on" ? 1 : 0)
-            ble.write(deviceConnecting.connectedPeripheral.id, bleIds.get('SERVICE').uuid, lightUuid, data.buffer)
+            data[0] = ($("#lightToggler").val() == "on" ? "1" : "0")
+            ble.write(deviceConnecting.connectedPeripheral.id, bleIds.get('SERVICE').uuid, lightUuid, arrayToArrayBuffer(data))
         })
 
-        let targetSpeed="";
-        let avgspeed="";
-        let distance="";
+        let targetSpeed="24.5";
+        let avgspeed="15";
+        let distance="45";
         let message="Hello world";
 
-       
+
         deviceLocation.getLocation()
 
         //        ble.write(deviceConnecting.connectedPeripheral.id,bleIds.get('SERVICE').uuid,bleIds.get('TEST_CH').uuid,deviceFunctions.stringToArrayBuffer(message));
@@ -86,7 +93,7 @@ const deviceFunctions={
         //        });
         //ble.notify(app.connectedPeripheral.id, bleIds.get('SERVICE').uuid, bleIds.get('SERVICE').uuid, app.onData);
 
-        
+
         $("#speedCell").text(targetSpeed+" km/h")
         $("#avgspeedCell").text(avgspeed+" km/h")
         $("#distanceCell").text(distance+" km")

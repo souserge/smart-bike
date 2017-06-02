@@ -1,5 +1,5 @@
 const deviceDisconnecting={
-    
+
     disconnect: function (e) {
         if (e) {
             e.preventDefault();

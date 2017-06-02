@@ -8,7 +8,7 @@ const deviceConnecting={
             },
             function() {
                 ble.enable();
-                
+
             }
         );
     },
@@ -33,7 +33,7 @@ const deviceConnecting={
     },
 
     onConnect: function(peripheral) {
-        isConnected=true
+
         deviceFunctions.showCurrentState("Connected")
         deviceConnecting.connectedPeripheral = peripheral;
         deviceFunctions.showEverything()

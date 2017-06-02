@@ -68,8 +68,8 @@ const deviceLocation={
                         $("#nameLabel").text("Name")
                         $("#tempLabel").text("Temperature")
                         $("#windLabel").text("Wind")
-                        $("#HumidityLabel").text("Humidity")
-                        $("#VisibilityLabel").text("Visibility")
+                        $("#humidityLabel").text("Humidity")
+                        $("#visibilityLabel").text("Visibility")
                         $("#sunriseLabel").text("Sunrise")
                         $("#sunsetLabel").text("Sunset")
 
