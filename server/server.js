@@ -36,7 +36,7 @@ bleno.on('advertisingStart', function(error) {
   console.log('Advertising started: ' + (error ? 'error ' + error : 'success'))
   if (!error) {
     bleno.setServices([bikeService])
-    console.log('Advertising ' + ids.get('SERVICE').name + ' with UUID ' + bikeService)
+    console.log('Advertising ' + ids.get('SERVICE').name + ' with UUID ' + bikeService.uuid)
   }
 })
 
