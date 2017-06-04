@@ -9,13 +9,33 @@ const lightIO = {
   
   init: () => {
     rpio.open(sensors.LIGHT, rpio.INPUT)
-    rpio.open(actuators.LED, rpio.OUTPUT)
+    rpio.open(actuators.LIGHT_REAR, rpio.OUTPUT)
+	this.toggle()
+	this.toggle()
+  },
+  
+  toggle: () => {
+	rpio.write(actuators.LIGHT_REAR, rpio.HIGH)
+	rpio.msleep(5)
+	rpio.write(actuators.LIGHT_REAR, rpio.LOW)
+	rpio.msleep(5)
+  },
+  
+  switchLights: () => {
+    if (this.isOn) {
+	  this.toggle()
+	  this.toggle()
+	} else {
+	  this.toggle()
+	}
+	this.isOn = !this.isOn
   },
   
   set: (value) => {
     console.log('Lights Toggled: ' + (value ? 'on' : 'off'))
-    this.isOn = value
-    rpio.write(actuators.LED, +value)
+    if(this.isOn != value) {
+      this.switchLights()
+	}   
   },
   
   setModeAutomatic: (mode) => {
