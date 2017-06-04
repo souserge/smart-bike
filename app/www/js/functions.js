@@ -65,17 +65,18 @@ const deviceFunctions={
 
 
         const lightUuid =  bleIds.get('LIGHT_CH').uuid
-        let data = ["0","0"]
+        let data = "00"
         $("#lightToggler").change(() => {
-            data[1] = ($("#lightToggler").val() == "on" ? "1" : "0")
-
-            ble.write(deviceConnecting.connectedPeripheral.id, bleIds.get('SERVICE').uuid, lightUuid, arrayToArrayBuffer(data))
+            const CHAR = ($("#lightToggler").val() == "on" ? "1" : "0")
+            data = strReplaceAt(1, data, CHAR)
+            ble.write(deviceConnecting.connectedPeripheral.id, bleIds.get('SERVICE').uuid, lightUuid, this.stringToArrayBuffer(data))
             alert(data)
 
         })
         $("#autoToggler").change(() => {
-            data[0] = ($("#lightToggler").val() == "on" ? "1" : "0")
-            ble.write(deviceConnecting.connectedPeripheral.id, bleIds.get('SERVICE').uuid, lightUuid, arrayToArrayBuffer(data))
+            const CHAR = ($("#lightToggler").val() == "on" ? "1" : "0")
+            data = strReplaceAt(0, data, CHAR)
+            ble.write(deviceConnecting.connectedPeripheral.id, bleIds.get('SERVICE').uuid, lightUuid, this.stringToArrayBuffer(data))
         })
 
         let targetSpeed="24.5";

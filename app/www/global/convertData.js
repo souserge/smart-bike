@@ -1,7 +1,7 @@
 function arrayToArrayBuffer(arr) {
     let uArr = new Uint8Array(arr)
-    let arrBuffer = new ArrayBuffer(uArr.length);
-    uArr.map(function(i, val){arrBuffer[i] = val});
+    let arrBuffer = new ArrayBuffer(uArr.length)
+    uArr.map(function(i, val){arrBuffer[i] = val})
     return arrBuffer
 }
 
@@ -24,3 +24,12 @@ function strReplaceAt(idx, str, repStr) {
     return str.substr(0, idx) + repStr + str.substr(idx + repStrLen)
   }
 }
+
+// TESTS - delete when you are sure it works
+//console.log(strReplaceAt(0, '00', '1'))
+//console.log(strReplaceAt(1, '00', '1'))
+//console.log(strReplaceAt(2, '00', '1'))
+//console.log(strReplaceAt(0, '00', '12'))
+//console.log(strReplaceAt(1, '00', '12'))
+//console.log(strReplaceAt(-1, '00', '12'))
+//console.log(strReplaceAt(-2, '00', '12'))

@@ -18,6 +18,7 @@ const deviceConnecting={
         let rssi
         if (device.rssi) {
             deviceFunctions.showCurrentState("Requesting connection")
+            alert(device.id)
             ble.connect(device.id, deviceConnecting.onConnect, deviceDisconnecting.onDisconnect);
         }
         else{
@@ -33,7 +34,7 @@ const deviceConnecting={
     },
 
     onConnect: function(peripheral) {
-
+        alert("connected")
         deviceFunctions.showCurrentState("Connected")
         deviceConnecting.connectedPeripheral = peripheral;
         deviceFunctions.showEverything()
