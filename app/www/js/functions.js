@@ -87,13 +87,6 @@ const deviceFunctions={
 
         deviceLocation.getLocation()
 
-        //        ble.write(deviceConnecting.connectedPeripheral.id,bleIds.get('SERVICE').uuid,bleIds.get('TEST_CH').uuid,deviceFunctions.stringToArrayBuffer(message));
-        //
-        //        ble.read(deviceConnecting.connectedPeripheral.id, bleIds.get('SERVICE').uuid, bleIds.get('TEST_CH').uuid, (valueArrBuf) => {
-        //            targetSpeed = deviceFunctions.bytesToString(valueArrBuf)
-        //        });
-        //ble.notify(app.connectedPeripheral.id, bleIds.get('SERVICE').uuid, bleIds.get('SERVICE').uuid, app.onData);
-
 
         $("#speedCell").text(targetSpeed+" km/h")
         $("#avgspeedCell").text(avgspeed+" km/h")
