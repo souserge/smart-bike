@@ -36,4 +36,4 @@ class LightCharacteristic extends Characteristic {
   } 
 }
 
-module.exports = new LightCharacteristic()
+module.exports = LightCharacteristic
