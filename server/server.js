@@ -1,7 +1,7 @@
 const bleno = require('bleno')
 
 const testCharacteristic = require('./characteristics/test')
-const lightCharacteristic = new require('./characteristics/light')
+const lightCharacteristic = new require('./characteristics/light')()
 const antiTheftCharacteristic = require('./characteristics/antiTheft')
 
 const ids = require('../global/ble').bleIds
