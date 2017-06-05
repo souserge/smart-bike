@@ -74,7 +74,7 @@ const deviceFunctions={
 
         })
         $("#autoToggler").change(() => {
-            const CHAR = ($("#lightToggler").val() == "on" ? "1" : "0")
+            const CHAR = ($("#autoToggler").val() == "on" ? "1" : "0")
             data = strReplaceAt(0, data, CHAR)
             ble.write(deviceConnecting.connectedPeripheral.id, bleIds.get('SERVICE').uuid, lightUuid, this.stringToArrayBuffer(data))
         })
