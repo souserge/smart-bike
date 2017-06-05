@@ -3,7 +3,7 @@ const rpio = require('rpio')
 const sensors   = require('./senactGlobals').sensors
 const actuators = require('./senactGlobals').actuators
 
-class antiTheftIO {
+class AntiTheftIO {
   constructor() {
     this.isOn = false
     this.isSignaling = false
@@ -29,7 +29,7 @@ class antiTheftIO {
     }
   }
   
-  toggle: (mode) => {
+  toggle(mode) {
     this.isOn = mode
     console.log('Anti-Theft mode: ' + (mode ? 'on' : 'off'))
     try {
@@ -49,4 +49,4 @@ class antiTheftIO {
   }
 }
 
-module.exports = new antiTheftIO()
+module.exports = new AntiTheftIO()

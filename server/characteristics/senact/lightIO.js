@@ -3,7 +3,7 @@ const rpio = require('rpio')
 const sensors = require('./senactGlobals').sensors
 const actuators = require('./senactGlobals').actuators
 
-class lightIO {
+class LightIO {
   constructor() {
     this.isOn = false
     this.isAutomatic = false
@@ -57,4 +57,4 @@ class lightIO {
   }
 }
 
-module.exports = new lightIO()
+module.exports = new LightIO()
