@@ -5,6 +5,7 @@ const actuators = require('./senactGlobals').actuators
 
 class LightIO {
   constructor() {
+    console.log("create LigthtIO")
     this.isOn = false
     this.isAutomatic = false
     rpio.open(sensors.LIGHT, rpio.INPUT)

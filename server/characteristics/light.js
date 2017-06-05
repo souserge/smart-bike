@@ -8,6 +8,7 @@ const Characteristic = bleno.Characteristic,
 
 class LightCharacteristic extends Characteristic {
   constructor() {
+    console.log("create LightCharacteristic")
     super({
       uuid: ids.get('LIGHT_CH').uuid,
       properties: [ 'read', 'write']
