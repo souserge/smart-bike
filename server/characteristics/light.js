@@ -14,32 +14,25 @@ class LightCharacteristic extends Characteristic {
     })
   }
   
-  writeLightIO(isAutomatic, isOn) {
-    lightIO.setModeAutomatic(isAutomatic)
-    if (!isAutomatic) lightIO.set(isOn)
-  }
-  
-  
   onWriteRequest(data, offset, withoutResponse, callback) {
     console.log('Light - WriteRequest:')
     let strData = data.toString('utf8')
     console.log(strData)
-    let isAutomatic = +strData[0]
-    let isOn = +strData[1]
+    let isAutomatic = !!+strData[0]
+    let isOn = !!+strData[1]
     console.log("IsAuto: " + isAutomatic + "; IsOn: " + isOn)
-    this.writeLightIO(!!isAutomatic, !!isOn)
+    
+    lightIO.setModeAutomatic(isAutomatic)
+    if (!isAutomatic) lightIO.set(isOn)
     
     callback(this.RESULT_SUCCESS)
   }
 
   onReadRequest(offset, callback) {
     console.log('Light - ReadRequest:')
-    let data = Buffer.allocUnsafe(2) 
-    data.writeUInt8(+lightIO.isAutomatic, 0)
-    data.writeUInt8(+lightIO.isOn, 1)
-    console.log('\tValue: ' + data)
+    const data = Buffer.from(+lightIO.isAutomatic + '' + +lightIO.isOn, 'utf8')
     callback(this.RESULT_SUCCESS, data)
   } 
 }
 
-module.exports = LightCharacteristic
+module.exports = new LightCharacteristic()
