@@ -3,19 +3,20 @@ const rpio = require('rpio')
 const sensors   = require('./senactGlobals').sensors
 const actuators = require('./senactGlobals').actuators
 
-const antiTheftIO = {
-  isOn: false,
-  isSignaling: false,
-  
-  
-  init: () => {
+class antiTheftIO {
+  constructor() {
+    this.isOn = false
+    this.isSignaling = false
     rpio.open(sensors.VIBRA, rpio.INPUT)
     rpio.open(actuators.BUZZER, rpio.OUTPUT, rpio.LOW)
-  },
+    rpio.write(actuators.BUZZER, rpio.HIGH)
+    setTimeout(() => {
+        rpio.write(actuators.BUZZER, rpio.LOW)
+      }, 500)
+  }
   
-  setAlarm: () => {
+  setAlarm() {
     console.log('THIEF!!')
-    
     if(!this.isSignaling) {
       rpio.write(actuators.BUZZER, rpio.HIGH)
       this.isSignaling = true
@@ -26,16 +27,17 @@ const antiTheftIO = {
         rpio.write(actuators.BUZZER, rpio.LOW)
       }, 2000)
     }
-  },
+  }
   
   toggle: (mode) => {
     this.isOn = mode
     console.log('Anti-Theft mode: ' + (mode ? 'on' : 'off'))
     try {
       if (mode) {
+        let self = this
         rpio.poll(sensors.VIBRA, (pin) => {
           if (rpio.read(pin)) {
-            antiTheftIO.setAlarm()
+            self.setAlarm()
           }
         })
       } else {
@@ -47,4 +49,4 @@ const antiTheftIO = {
   }
 }
 
-module.exports = antiTheftIO
+module.exports = new antiTheftIO()

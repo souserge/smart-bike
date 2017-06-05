@@ -29,4 +29,4 @@ class AntiTheftCharacteristic extends Characteristic {
   } 
 }
 
-module.exports = AntiTheftCharacteristic
+module.exports = new AntiTheftCharacteristic()
