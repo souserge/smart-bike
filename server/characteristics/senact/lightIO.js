@@ -10,6 +10,7 @@ class LightIO {
     this.isAutomatic = false
     rpio.open(sensors.LIGHT, rpio.INPUT)
     rpio.open(actuators.LIGHT_REAR, rpio.OUTPUT)
+    this.setModeAutomatic(true)
 	this.toggle()
 	this.toggle()
   }
@@ -30,7 +31,6 @@ class LightIO {
 	  this.toggle()
 	}
 	this.isOn = !this.isOn
-    console.log("Mode: " + this.isOn)
   }
   
   set(value) {
@@ -47,6 +47,7 @@ class LightIO {
           if (mode && !this.isAutomatic) {
           const self = this
           rpio.poll(sensors.LIGHT, (pin) => {
+            console.log("sensor changed state")
             self.set(rpio.read(pin)) // TOGGLE LIGHTS IF READ 1
           })
         } else if (this.isAutomatic) { // TODO: fix it gracefully
