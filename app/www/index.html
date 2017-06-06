@@ -57,7 +57,13 @@
             </table>
 
         </div>
-        <div align="center" id="locationScreen">
+
+
+
+        <div align="center" id="locationScreen" style="float:left;width: 180px;">
+            <a data-role="button" data-inline="true" type="submit" id="locationButton">See location</a>
+        </div>
+        <div align="center" id="locationInfo" style="display:none" >
             <table align="center" style="width:200px; margin:0 auto; margin-left:auto; margin-right:auto; margin-bottom:10px; align:center; text-align:center;">
                 <tr>
                     <th id="latitudeLabel"></th>
@@ -69,37 +75,41 @@
                 </tr>
 
             </table>
-
+            <div id="mapScreen" style="width: 357px; height: 300px;">
+            </div>
         </div>
 
-        <div align="center" id="weatherScreen">
+        <div align="center" id="weatherScreen" style="float:right;width: 180px;">
+            <a data-role="button" data-inline="true" type="submit" id="weatherButton">See weather</a>
+        </div>
+        <div align="center" id="weatherInfo" style="display:none">
             <table align="center" style="width:200px; margin:0 auto; margin-left:auto; margin-right:auto; margin-bottom:10px; align:center; text-align:center;" >
                 <tr>
-                    <th id="nameLabel">Name</th>
+                    <th id="nameLabel"></th>
                     <td id="nameCell"></td>
                 </tr>
                 <tr>
-                    <th id="tempLabel">Temperature</th>
+                    <th id="tempLabel"></th>
                     <td id="tempCell"></td>
                 </tr>
                 <tr>
-                    <th id="windLabel">Wind</th>
+                    <th id="windLabel"></th>
                     <td id="windCell"></td>
                 </tr>
                 <tr>
-                    <th id="humidityLabel">Humidity</th>
+                    <th id="humidityLabel"></th>
                     <td id="humidityCell"></td>
                 </tr>
                 <tr>
-                    <th id="visibilityLabel">Visibility</th>
+                    <th id="visibilityLabel"></th>
                     <td id="visibilityCell"></td>
                 </tr>
                 <tr>
-                    <th id="sunriseLabel">Sunrise</th>
+                    <th id="sunriseLabel"></th>
                     <td id="sunriseCell"></td>
                 </tr>
                 <tr>
-                    <th id="sunsetLabel">Sunset</th>
+                    <th id="sunsetLabel"></th>
                     <td id="sunsetCell"></td>
                 </tr>
 
@@ -107,29 +117,36 @@
             </table>
 
         </div>
-        <div align="center" id="lightScreen">
-            <label for="lightToggler">Toggle light</label>
+
+        <div align="center" id="lightScreen" style="float:left;width:180px;" >
+
             <select  name="slider" data-role="slider" id="lightToggler" >
                 <option value="off">Off</option>
                 <option value="on">On</option>
             </select>
-            <label for="autoToggler">Automatic mode</label>
+            <label for="lightToggler">Toggle light</label>
+        </div>
+        <div align="center" id="autoScreen" style="float:right;width:180px;">
+
             <select  name="slider" data-role="slider" id="autoToggler" >
                 <option value="off">Off</option>
                 <option value="on">On</option>
             </select>
+            <label for="autoToggler">Automatic mode</label>
+        </div>
+        <div align="center" id="alarmScreen">
+            <a data-role="button" data-inline="true" type="submit" id="alarmButton">Enable thief mode</a>
         </div>
 
-        <div id="mapScreen" style="width: 357px; height: 300px;">
-        </div>
+
 
 
 
         <script type="text/javascript" src="cordova.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBidFVzXcpLw5WSpeJmXoZEMpuGuPtsb68"></script>
         <script src="js/ble.js"></script>
-        <script src="js/speech.js"></script>
-        <script src="js/convertData.js"></script>
+        <script src="js/disconnect.js"></script>
+        <script src="global/convertData.js"></script>
         <script src="js/functions.js"></script>
         <script src="js/speedometer.js"></script>
         <script src="js/location.js"></script>

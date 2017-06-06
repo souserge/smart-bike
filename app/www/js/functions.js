@@ -2,6 +2,23 @@ String.prototype.replaceAt=function(index, replacement) {
     return this.substr(0, index) + replacement+ this.substr(index + replacement.length);}
 
 const deviceFunctions={
+    toggleLocation:function() {
+        var x = document.getElementById('locationInfo');
+        if (x.style.display === 'none') {
+            x.style.display = 'block';
+        } else {
+            x.style.display = 'none';
+        }
+    },
+
+    toggleWeather:function() {
+        var y = document.getElementById('weatherInfo');
+        if (y.style.display === 'none') {
+            y.style.display = 'block';
+        } else {
+            y.style.display = 'none';
+        }
+    },
     checkBluetooth: function(){
         ble.isEnabled("",
                       function(){
@@ -33,9 +50,12 @@ const deviceFunctions={
         $("#statsScreen").hide()
         $("#acelScreen").hide()
         $("#lightScreen").hide()
+        $("#autoScreen").hide()
         $("#locationScreen").hide()
+        $("#locationInfo").hide()
         $("#weatherScreen").hide()
-        $("#mapScreen").hide()
+        $("#weatherInfo").hide()
+        $("#alarmScreen").hide()
 
     },
     showToggle:function(){
@@ -45,37 +65,44 @@ const deviceFunctions={
         $("#statsScreen").hide()
         $("#acelScreen").hide()
         $("#lightScreen").hide()
-        $("#mapScreen").hide()
+        $("#autoScreen").hide()
         $("#locationScreen").hide()
+        $("#locationInfo").hide()
         $("#weatherScreen").hide()
-
+        $("#weatherInfo").hide()
+        $("#alarmScreen").hide()
     },
 
 
     showEverything: function() {
         $("#bluetoothScreen").hide()
-
         $("#statsScreen").show()
         $("#lightScreen").show()
-        $("#locationScreen").show()
+        $("#autoScreen").show()
         $("#acelScreen").show()
-        $("#mapScreen").show()
+        $("#locationScreen").show()
+        $("#locationInfo").hide()
         $("#weatherScreen").show()
-
+        $("#weatherInfo").hide()
+        $("#alarmScreen").show()
 
 
         const lightUuid =  bleIds.get('LIGHT_CH').uuid
-        let data = ["0","0"]
+        let data = "00"
         $("#lightToggler").change(() => {
-            data[1] = ($("#lightToggler").val() == "on" ? "1" : "0")
+            try{
+                const val = ($("#lightToggler").val() == "on" ? "1" : "0")
+                data=strReplaceAt(1,data,val)
+                ble.write(deviceConnecting.connectedPeripheral.id, bleIds.get('SERVICE').uuid, lightUuid, deviceFunctions.stringToArrayBuffer(data))
 
-            ble.write(deviceConnecting.connectedPeripheral.id, bleIds.get('SERVICE').uuid, lightUuid, arrayToArrayBuffer(data))
-            alert(data)
-
+            }catch(e){alert(e)}
         })
         $("#autoToggler").change(() => {
-            data[0] = ($("#lightToggler").val() == "on" ? "1" : "0")
-            ble.write(deviceConnecting.connectedPeripheral.id, bleIds.get('SERVICE').uuid, lightUuid, arrayToArrayBuffer(data))
+
+            const val = ($("#autoToggler").val() == "on" ? "1" : "0")
+            data = strReplaceAt(0,data,val)
+            ble.write(deviceConnecting.connectedPeripheral.id, bleIds.get('SERVICE').uuid, lightUuid, deviceFunctions.stringToArrayBuffer(data))
+
         })
 
         let targetSpeed="24.5";
@@ -85,6 +112,9 @@ const deviceFunctions={
 
 
         deviceLocation.getLocation()
+        deviceLocation.getWeather()
+        deviceLocation.getMap()
+        watchID=deviceLocation.watchPosition()
 
         //        ble.write(deviceConnecting.connectedPeripheral.id,bleIds.get('SERVICE').uuid,bleIds.get('TEST_CH').uuid,deviceFunctions.stringToArrayBuffer(message));
         //
@@ -107,9 +137,9 @@ const deviceFunctions={
         let doAnimation=false;
         drawSpeedometer(targetSpeed, canvasId, doAnimation);
 
-
-
-
+    },
+    alarmMode: function() {
+        alert("THIEF!!!!!!!!!")
     }
 }
 

@@ -1,24 +1,19 @@
-
-
 const deviceLocation={
-
     getLocation:function(){
-
         navigator.geolocation.getCurrentPosition(
-            deviceLocation.onLocation,
-
-            function onError(error) {
-
-                deviceFunctions.showCurrentState("Location error")
-                return 0
+            function (position) {
+                deviceLocation.onLocation(position)
+            },
+            function (error) {
+                deviceFunctions.showCurrentState("Location error: " +error)
+                return
 
             },
-            {enableHighAccuracy: true}
+            {enableHighAccuracy: true, timeout: 10000 }
         )
 
     },
     onLocation:function(position){
-
         let locationInfo={
             "latitude":position.coords.latitude,
             "longitude":position.coords.longitude ,
@@ -33,10 +28,29 @@ const deviceLocation={
         $("#longitudeCell").text(locationInfo.longitude)
         $("#latitudeLabel").text("Latitude")
         $("#longitudeLabel").text("Longitude")
+    },
+
+    getWeather:function(){
+        navigator.geolocation.getCurrentPosition(
+            function (position) {
+                deviceLocation.onWeather(position)
+            },
+            function (error) {
+                deviceFunctions.showCurrentState("Weather error: "+error)
+                return
+
+            },
+            {enableHighAccuracy: true, timeout: 10000 }
+        )
+    },
+
+    onWeather:function(position){
+        let latitude=position.coords.latitude
+        let longitude=position.coords.longitude
 
         let weatherKey="aa928f2867a6ea5b7bd2e4a51dcb7146"
         let queryString =
-            'http://api.openweathermap.org/data/2.5/weather?lat='+ locationInfo.latitude + '&lon=' + locationInfo.longitude + '&appid=' + weatherKey + '&units=imperial' //implement protection of max 60 time/minute
+            'http://api.openweathermap.org/data/2.5/weather?lat='+ latitude + '&lon=' + longitude + '&appid=' + weatherKey + '&units=imperial' //implement protection of max 60 time/minute
 
         $.getJSON(queryString, function (results) {
 
@@ -56,7 +70,6 @@ const deviceLocation={
                             "sunrise":sunriseDate.toLocaleTimeString(),
                             "sunset":sunsetDate.toLocaleTimeString()
                         }
-
                         $("#nameCell").text(weatherInfo.description)
                         $("#tempCell").text(weatherInfo.temp)
                         $("#windCell").text(weatherInfo.wind)
@@ -73,115 +86,136 @@ const deviceLocation={
                         $("#sunriseLabel").text("Sunrise")
                         $("#sunsetLabel").text("Sunset")
 
-                        let mapOptions = {
-                            center: new google.maps.LatLng(0, 0),
-                            zoom: 1,
-                            mapTypeId: google.maps.MapTypeId.ROADMAP
-                        };
-
-                        map = new google.maps.Map
-                        (document.getElementById("mapScreen"), mapOptions);
-
-
-                        let latLong = new google.maps.LatLng(locationInfo.latitude, locationInfo.longitude);
-
-                        let marker = new google.maps.Marker({
-                            position: latLong
-                        });
-
-                        marker.setMap(map);
-                        map.setZoom(15);
-                        map.setCenter(marker.getPosition());
-
                     }
-                });
-
+                })
             }
         }).fail(function () {
             deviceFunctions.showCurrentState('code: ' + error.code + ',' +
                                              'message: ' + error.message)
         });   
 
+    },
 
+    getMap:function(){
+        navigator.geolocation.getCurrentPosition(
+            function (position) {
+                deviceLocation.onMap(position)
+            },
+            function (error) {
+                deviceFunctions.showCurrentState("Map error:" +error)
+                return
+
+            },
+            {enableHighAccuracy: true, timeout: 10000 }
+        )
+    },
+
+    onMap:function(position){
+        let latitude=position.coords.latitude
+        let longitude=position.coords.longitude
+
+        var mapOptions = {
+            center: new google.maps.LatLng(0, 0),
+            zoom: 1,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        map = new google.maps.Map
+        (document.getElementById("mapScreen"), mapOptions);
+
+
+        var latLong = new google.maps.LatLng(latitude, longitude);
+
+        var marker = new google.maps.Marker({
+            position: latLong
+        });
+
+        marker.setMap(map);
+        map.setZoom(15);
+        map.setCenter(marker.getPosition());
 
     },
 
-    //    getWeather:function(latitude, longitude){
-    //
-    //        let queryString =
-    //            'http://api.openweathermap.org/data/2.5/weather?lat='+ latitude + '&lon=' + longitude + '&appid=' + weatherKey + '&units=imperial';
-    //
-    //        $.getJSON(queryString, function (results) {
-    //            if (results.weather.length) {
-    //                $.getJSON(queryString, function (results) {
-    //                    if (results.weather.length) {
-    //                        let sunriseDate = new Date(results.sys.sunrise)
-    //                        let sunsetDate = new Date(results.sys.sunset)
-    //                        let weatherInfo={
-    //                            "description":results.name,
-    //                            "temp":results.main.temp,
-    //                            "wind":results.wind.speed,
-    //                            "humidity":results.main.humidity,
-    //                            "visibility":results.weather[0].main,
-    //                            "sunrise":sunriseDate.toLocaleTimeString(),
-    //                            "sunset":sunsetDate.toLocaleTimeString()
-    //                        }
-    //                        getMap(latitude,longitude)
-    //                    }
-    //                });
-    //            }
-    //        }).fail(function () {
-    //            deviceFunctions.showCurrentState('code: ' + error.code + ',' +
-    //                                             'message: ' + error.message)
-    //        });
-    //    },
-    //
-    //    getMap:function(latitude, longitude){
-    //
-    //        let mapOptions = {
-    //            center: new google.maps.LatLng(0, 0),
-    //            zoom: 1,
-    //            mapTypeId: google.maps.MapTypeId.ROADMAP
-    //        };
-    //
-    //        map = new google.maps.Map
-    //        (document.getElementById("map"), mapOptions);
-    //
-    //
-    //        let latLong = new google.maps.LatLng(latitude, longitude);
-    //
-    //        let marker = new google.maps.Marker({
-    //            position: latLong
-    //        });
-    //
-    //        marker.setMap(map);
-    //        map.setZoom(15);
-    //        map.setCenter(marker.getPosition());
-    //    },
+    watchPosition:function () {
 
+        return navigator.geolocation.watchPosition(
+            function (position) {
+                deviceLocation.onWatch(position)
+            },
+            function (error) {
+                deviceFunctions.showCurrentState("Watch error:" +error)
+                return
 
-
-    watchMapPosition:function(){
-
-        return navigator.geolocation.watchPosition
-        (
-            function(){let updatedLatitude = position.coords.latitude;
-                       let updatedLongitude = position.coords.longitude;
-
-                       if (updatedLatitude != Latitude && updatedLongitude != Longitude) {
-
-                           Latitude = updatedLatitude;
-                           Longitude = updatedLongitude;
-
-                           getMap(updatedLatitude, updatedLongitude);
-                       }}, function(){deviceFunctions.showCurrentState('code: ' + error.code + ',' +
-                                                                       'message: ' + error.message)}, { enableHighAccuracy: true,timeout: 30000 });
+            },
+            { enableHighAccuracy: true, timeout: 10000});
     },
 
-    stopWatchingLocation:function(watchID){
-        navigator.geolocation.clearWatch(watchID);
+    onWatch:function(position){
+        let updatedLatitude = position.coords.latitude;
+        let updatedLongitude = position.coords.longitude;
+
+        if (updatedLatitude != Latitude && updatedLongitude != Longitude) {
+
+            Latitude = updatedLatitude;
+            Longitude = updatedLongitude;
+            getWeather()
+            getMap(updatedLatitude, updatedLongitude);
+        }
 
     }
-
-
 }
+
+//    let mapOptions = {
+//    center: new google.maps.LatLng(0, 0),
+//    zoom: 1,
+//    mapTypeId: google.maps.MapTypeId.ROADMAP
+//};
+//
+//map = new google.maps.Map
+//(document.getElementById("mapScreen"), mapOptions);
+//
+//
+//let latLong = new google.maps.LatLng(locationInfo.latitude, locationInfo.longitude);
+//
+//let marker = new google.maps.Marker({
+//    position: latLong
+//});
+//
+//marker.setMap(map);
+//map.setZoom(15);
+//map.setCenter(marker.getPosition());
+
+
+
+//    // Success callback for watching your changing position
+//
+//    var onMapWatchSuccess = function (position) {
+//
+//    var updatedLatitude = position.coords.latitude;
+//    var updatedLongitude = position.coords.longitude;
+//
+//    if (updatedLatitude != Latitude && updatedLongitude != Longitude) {
+//
+//    Latitude = updatedLatitude;
+//    Longitude = updatedLongitude;
+//
+//    getMap(updatedLatitude, updatedLongitude);
+//}
+//},
+//
+//    // Error callback
+//
+//    function onMapError(error) {
+//        console.log('code: ' + error.code + '\n' +
+//                    'message: ' + error.message + '\n');
+//    },
+//
+//        // Watch your changing position
+//
+//        function watchMapPosition() {
+//
+//            return navigator.geolocation.watchPosition
+//            (onMapWatchSuccess, onMapError, { enableHighAccuracy: true });
+//        }
+
+

@@ -14,5 +14,4 @@
     <plugin name="cordova-plugin-tts" spec="~0.2.3" />
     <plugin name="cordova-plugin-media" spec="https://github.com/apache/cordova-plugin-media" />
     <access origin="*" />
-    <plugin name="com.latin.continuoussr" spec="https://github.com/daao87/ContinuousSpeechRecognizer.git" />
 </widget>
