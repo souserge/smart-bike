@@ -43,18 +43,20 @@ class LightIO {
   setModeAutomatic (mode) {
     console.log('Lights Automatic Mode: ' + (mode ? 'on' : 'off'))
     try {
-      if (mode && !this.isAutomatic) {
-        const self = this
-        rpio.poll(sensors.LIGHT, (pin) => {
-          self.set(rpio.read(pin)) // TOGGLE LIGHTS IF READ 1
-        })
-      } else if (this.isAutomatic) { // TODO: fix it gracefully
-        rpio.poll(sensors.LIGHT, null)
+      if (mode !== this.isAutomatic) {
+          if (mode && !this.isAutomatic) {
+          const self = this
+          rpio.poll(sensors.LIGHT, (pin) => {
+            self.set(rpio.read(pin)) // TOGGLE LIGHTS IF READ 1
+          })
+        } else if (this.isAutomatic) { // TODO: fix it gracefully
+          rpio.poll(sensors.LIGHT, null)
+        }
+        this.isAutomatic = mode
       }
     } catch (e) {
       console.log("Poll error: " + e)
     }
-    this.isAutomatic = mode
   }
 }
 
