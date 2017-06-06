@@ -40,12 +40,13 @@ class LightIO {
     }   
   }
   
-  setModeAutomatic (mode) {
+  setModeAutomatic(mode) {
     console.log('Lights Automatic Mode: ' + (mode ? 'on' : 'off'))
     try {
       if (mode !== this.isAutomatic) {
           if (mode && !this.isAutomatic) {
           const self = this
+          console.log('listening for events')
           rpio.poll(sensors.LIGHT, (pin) => {
             console.log("sensor changed state")
             self.set(rpio.read(pin)) // TOGGLE LIGHTS IF READ 1
