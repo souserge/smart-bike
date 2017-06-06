@@ -1,6 +1,7 @@
 const deviceDisconnecting={
 
     disconnect: function (e) {
+        alert("disconnect")
         if (e) {
             e.preventDefault();
         }
@@ -13,6 +14,7 @@ const deviceDisconnecting={
 
     },
     onDisconnect: function() {
+        alert("disconnected")
         isConnected=false
         deviceFunctions.showButton()
         deficeFunctions.showCurrentState("Disconnected ")

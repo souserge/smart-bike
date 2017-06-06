@@ -90,10 +90,12 @@ const deviceFunctions={
         const lightUuid =  bleIds.get('LIGHT_CH').uuid
         let data = "00"
         $("#lightToggler").change(() => {
+
             try{
                 const val = ($("#lightToggler").val() == "on" ? "1" : "0")
                 data=strReplaceAt(1,data,val)
                 ble.write(deviceConnecting.connectedPeripheral.id, bleIds.get('SERVICE').uuid, lightUuid, deviceFunctions.stringToArrayBuffer(data))
+
 
             }catch(e){alert(e)}
         })
@@ -115,13 +117,6 @@ const deviceFunctions={
         deviceLocation.getWeather()
         deviceLocation.getMap()
         watchID=deviceLocation.watchPosition()
-
-        //        ble.write(deviceConnecting.connectedPeripheral.id,bleIds.get('SERVICE').uuid,bleIds.get('TEST_CH').uuid,deviceFunctions.stringToArrayBuffer(message));
-        //
-        //        ble.read(deviceConnecting.connectedPeripheral.id, bleIds.get('SERVICE').uuid, bleIds.get('TEST_CH').uuid, (valueArrBuf) => {
-        //            targetSpeed = deviceFunctions.bytesToString(valueArrBuf)
-        //        });
-        //ble.notify(app.connectedPeripheral.id, bleIds.get('SERVICE').uuid, bleIds.get('SERVICE').uuid, app.onData);
 
 
         $("#speedCell").text(targetSpeed+" km/h")

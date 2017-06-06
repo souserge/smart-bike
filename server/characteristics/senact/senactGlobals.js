@@ -4,7 +4,7 @@ const sensors = {
 }
 
 const actuators = {
-    LED: 12,
+    LIGHT_REAR: 15,
     BUZZER: 13
 }
 

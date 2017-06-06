@@ -16,17 +16,17 @@ class AntiTheftCharacteristic extends Characteristic {
   
   onWriteRequest(data, offset, withoutResponse, callback) {
     console.log('AntiTheft - WriteRequest:')
-    antiTheftIO.toggle(!!data[0])
-    
+    const strData = data.toString('utf8')
+    const isOn = !!+strData[0]
+    antiTheftIO.toggle(isOn)   
     callback(this.RESULT_SUCCESS)
   }
 
   onReadRequest(offset, callback) {
     console.log('AntiTheft - ReadRequest:')
-    const data = Buffer.from([+antiTheftIO.isOn])
-    console.log('\tValue: ' + data)
+    const data = Buffer.from('' + +antiTheftIO.isOn, 'utf8')
     callback(this.RESULT_SUCCESS, data)
   } 
 }
 
-module.exports = AntiTheftCharacteristic
+module.exports = new AntiTheftCharacteristic()
