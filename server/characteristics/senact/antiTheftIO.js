@@ -41,7 +41,7 @@ class AntiTheftIO {
           }
         })
       } else {
-        rpio.poll(sensors.LIGHT, null)
+        rpio.poll(sensors.VIBRA, null)
       }
     } catch (e) {
       console.log("Poll error: " + e)
