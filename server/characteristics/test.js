@@ -27,4 +27,4 @@ class TestCharacteristic extends Characteristic {
   } 
 }
 
-module.exports = new TestCharacteristic()
+module.exports = TestCharacteristic

@@ -1,17 +1,17 @@
 const bleno = require('bleno')
 
-const testCharacteristic = require('./characteristics/test')
-const lightCharacteristic = require('./characteristics/light')
-const antiTheftCharacteristic = require('./characteristics/antiTheft')
+const TestCharacteristic = require('./characteristics/test')
+const LightCharacteristic = require('./characteristics/light')
+const AntiTheftCharacteristic = require('./characteristics/antiTheft')
 
 const ids = require('../global/ble').bleIds
 
 const bikeService = new bleno.PrimaryService({
   uuid: ids.get('SERVICE').uuid,
   characteristics: [
-    testCharacteristic,
-    lightCharacteristic,
-    antiTheftCharacteristic
+    new TestCharacteristic(),
+    new LightCharacteristic(),
+    new AntiTheftCharacteristic()
   ]
 });
 
