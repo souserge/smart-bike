@@ -10,13 +10,11 @@ class LightIO {
     this.isAutomatic = false
     rpio.open(sensors.LIGHT, rpio.INPUT)
     rpio.open(actuators.LIGHT_REAR, rpio.OUTPUT)
-    this.setModeAutomatic(true)
 	this.toggle()
 	this.toggle()
   }
   
   toggle() {
-    console.log("toggling")
 	rpio.write(actuators.LIGHT_REAR, rpio.HIGH)
 	rpio.msleep(10)
 	rpio.write(actuators.LIGHT_REAR, rpio.LOW)

@@ -1,16 +1,12 @@
 const bleno = require('bleno')
 
 const testCharacteristic = require('./characteristics/test')
-const LightCharacteristic = require('./characteristics/light')
+const lightCharacteristic = require('./characteristics/light')
 const antiTheftCharacteristic = require('./characteristics/antiTheft')
 
 const ids = require('../global/ble').bleIds
 
-const lightCharacteristic = new LightCharacteristic()
-
-const PrimaryService = bleno.PrimaryService
-
-const bikeService = new PrimaryService({
+const bikeService = new bleno.PrimaryService({
   uuid: ids.get('SERVICE').uuid,
   characteristics: [
     testCharacteristic,
@@ -39,5 +35,5 @@ bleno.on('advertisingStart', function(error) {
 })
 
 process.on('SIGTERM', function () {
-  
+  bleno.stopAdvertising()
 })
