@@ -1,5 +1,12 @@
 const deviceLocation={
+
+
     getLocation:function(){
+        let locationOptions = {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 3600000
+        }
         navigator.geolocation.getCurrentPosition(
             function (position) {
                 deviceLocation.onLocation(position)
@@ -9,11 +16,12 @@ const deviceLocation={
                 return
 
             },
-            {enableHighAccuracy: true, timeout: 10000 }
+            locationOptions
         )
 
     },
     onLocation:function(position){
+
         let locationInfo={
             "latitude":position.coords.latitude,
             "longitude":position.coords.longitude ,
@@ -31,22 +39,8 @@ const deviceLocation={
     },
 
     getWeather:function(){
-        navigator.geolocation.getCurrentPosition(
-            function (position) {
-                deviceLocation.onWeather(position)
-            },
-            function (error) {
-                deviceFunctions.showCurrentState("Weather error: "+error)
-                return
-
-            },
-            {enableHighAccuracy: true, timeout: 10000 }
-        )
-    },
-
-    onWeather:function(position){
-        let latitude=position.coords.latitude
-        let longitude=position.coords.longitude
+        let latitude=Number($("#latitudeCell").text());
+        let longitude=Number($("#longitudeCell").text());
 
         let weatherKey="aa928f2867a6ea5b7bd2e4a51dcb7146"
         let queryString =
@@ -96,24 +90,10 @@ const deviceLocation={
 
     },
 
+
     getMap:function(){
-        navigator.geolocation.getCurrentPosition(
-            function (position) {
-                deviceLocation.onMap(position)
-            },
-            function (error) {
-                deviceFunctions.showCurrentState("Map error:" +error)
-                return
-
-            },
-            {enableHighAccuracy: true, timeout: 10000 }
-        )
-    },
-
-    onMap:function(position){
-        let latitude=position.coords.latitude
-        let longitude=position.coords.longitude
-
+        let latitude=Number($("#latitudeCell").text());
+        let longitude=Number($("#longitudeCell").text());
         var mapOptions = {
             center: new google.maps.LatLng(0, 0),
             zoom: 1,
@@ -138,6 +118,11 @@ const deviceLocation={
 
     watchPosition:function () {
 
+        let locationOptions = {
+            enableHighAccuracy: true,
+            timeout: 10000
+        }
+
         return navigator.geolocation.watchPosition(
             function (position) {
                 deviceLocation.onWatch(position)
@@ -147,19 +132,27 @@ const deviceLocation={
                 return
 
             },
-            { enableHighAccuracy: true, timeout: 10000});
+            locationOptions
+        )
     },
 
     onWatch:function(position){
+        let latitude=Number($("#latitudeCell").text())
+        let longitude=Number($("#longitudeCell").text())
+
         let updatedLatitude = position.coords.latitude;
         let updatedLongitude = position.coords.longitude;
+        if (updatedLatitude != latitude && updatedLongitude != longitude) {
 
-        if (updatedLatitude != Latitude && updatedLongitude != Longitude) {
+            let distance=deviceFunctions.getDistance(latitude,longitude,updatedLatitude,updatedLongitude)
+            deviceFunctions.updateDistance(distance)
+            $("#latitudeCell").text(updatedLatitude)
+            $("#longitudeCell").text(updatedLongitude)
+            
+            deviceLocation.getWeather()
+            deviceLocation.getMap()
 
-            Latitude = updatedLatitude;
-            Longitude = updatedLongitude;
-            getWeather()
-            getMap(updatedLatitude, updatedLongitude);
+
         }
 
     }

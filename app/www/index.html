@@ -54,6 +54,10 @@
                     <th id="distanceLabel"></th>
                     <td id="distanceCell"></td>
                 </tr>
+                <tr>
+                    <th id="timeLabel"></th>
+                    <td id="timeCell"></td>
+                </tr>
             </table>
 
         </div>
@@ -63,7 +67,7 @@
         <div align="center" id="locationScreen" style="float:left;width: 180px;">
             <a data-role="button" data-inline="true" type="submit" id="locationButton">See location</a>
         </div>
-        <div align="center" id="locationInfo" style="display:none" >
+        <div align="center" id="locationInfo" >
             <table align="center" style="width:200px; margin:0 auto; margin-left:auto; margin-right:auto; margin-bottom:10px; align:center; text-align:center;">
                 <tr>
                     <th id="latitudeLabel"></th>
@@ -82,7 +86,7 @@
         <div align="center" id="weatherScreen" style="float:right;width: 180px;">
             <a data-role="button" data-inline="true" type="submit" id="weatherButton">See weather</a>
         </div>
-        <div align="center" id="weatherInfo" style="display:none">
+        <div align="center" id="weatherInfo">
             <table align="center" style="width:200px; margin:0 auto; margin-left:auto; margin-right:auto; margin-bottom:10px; align:center; text-align:center;" >
                 <tr>
                     <th id="nameLabel"></th>
@@ -134,8 +138,13 @@
             </select>
             <label for="autoToggler">Automatic mode</label>
         </div>
-        <div align="center" id="alarmScreen">
-            <a data-role="button" data-inline="true" type="submit" id="alarmButton">Enable thief mode</a>
+        <div align="center" id="alarmScreen" style="width:180px;">
+
+            <select  name="slider" data-role="slider" id="alarmToggler" >
+                <option value="off">Off</option>
+                <option value="on">On</option>
+            </select>
+            <label for="alarmToggler">Thief mode</label>
         </div>
 
 
