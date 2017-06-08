@@ -6,9 +6,6 @@ let app = {
     },   
 }
 const isConnected=false
-try {
+
     app.initialize()
 
-} catch(e) {
-    alert("Error: " + e);
-}

@@ -1,5 +1,3 @@
-String.prototype.replaceAt=function(index, replacement) {
-    return this.substr(0, index) + replacement+ this.substr(index + replacement.length);}
 
 const deviceFunctions={
     toggleLocation:function() {
@@ -18,31 +16,6 @@ const deviceFunctions={
         } else {
             y.style.display = 'none';
         }
-    },
-    startTimer:function() {
-        // Stopwatch element on the page
-        var $stopwatch;
-
-        // Timer speed in milliseconds
-        var incrementTime = 70;
-
-        // Current timer position in milliseconds
-        var currentTime = 0;
-
-        // Start the timer
-        $(function() {
-            $stopwatch = $('#timeCell');
-            Example1.Timer = $.timer(updateTimer, incrementTime, true);  
-        });
-
-        // Output time and increment
-        function updateTimer() {
-            var timeString = formatTime(currentTime);
-            $stopwatch.txt(timeString);
-            currentTime += incrementTime;
-        }
-
-
     },
     getDistance:function(lat1, lon1, lat2, lon2) {
         var R = 6371; // Radius of the earth in km
@@ -148,20 +121,19 @@ const deviceFunctions={
             ble.write(deviceConnecting.connectedPeripheral.id, bleIds.get('SERVICE').uuid, lightUuid, deviceFunctions.stringToArrayBuffer(data))
 
         })
-        
-        
-      
+
+
+
         let dataThief = "0"
         const thiefUuid =  bleIds.get('ANTI_THEFT_CH').uuid
-        
+
         $("#alarmToggler").change(() => {
             const val = ($("#alarmToggler").val() == "on" ? "1" : "0")
             dataThief = strReplaceAt(0,data,val)
             ble.write(deviceConnecting.connectedPeripheral.id, bleIds.get('SERVICE').uuid, thiefUuid, deviceFunctions.stringToArrayBuffer(dataThief)) 
         })
-            
-        deviceFunctions.showCurrentState("Thief mode enabled")
-        
+
+
 
         let targetSpeed="24.5";
 
@@ -169,10 +141,10 @@ const deviceFunctions={
 
 
         $("#distanceCell").text(0+" km")
-        deviceLocation.getLocation()
-        deviceLocation.getWeather()
-        deviceLocation.getMap()
-        let watchID=deviceLocation.watchPosition()
+        //deviceLocation.getLocation()
+        //deviceLocation.getWeather()
+        //deviceLocation.getMap()
+        //let watchID=deviceLocation.watchPosition()
 
 
         //$("#speedCell").text(targetSpeed+" km/h")
@@ -184,12 +156,10 @@ const deviceFunctions={
         $("#timeLabel").text("Time")
 
 
-
         let canvasId="canvasId";
         let doAnimation=false;
         drawSpeedometer(targetSpeed, canvasId, doAnimation);
 
     }
 }
-
 

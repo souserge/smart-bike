@@ -1,3 +1,4 @@
+
 const deviceLocation={
 
 
@@ -53,32 +54,27 @@ const deviceLocation={
 
                     if (results.weather.length) {
 
-                        let sunriseDate = new Date(results.sys.sunrise)
-                        let sunsetDate = new Date(results.sys.sunset)
                         let weatherInfo={
                             "description":results.name,
                             "temp":Math.round((results.main.temp-32)/1.8),//F a ºC
                             "wind":results.wind.speed,
                             "humidity":results.main.humidity,
                             "visibility":results.weather[0].main,
-                            "sunrise":sunriseDate.toLocaleTimeString(),
-                            "sunset":sunsetDate.toLocaleTimeString()
+
                         }
                         $("#nameCell").text(weatherInfo.description)
                         $("#tempCell").text(weatherInfo.temp)
                         $("#windCell").text(weatherInfo.wind)
                         $("#humidityCell").text(weatherInfo.humidity)
                         $("#visibilityCell").text(weatherInfo.visibility)
-                        $("#sunriseCell").text(weatherInfo.sunrise)
-                        $("#sunsetCell").text(weatherInfo.sunset)
+
 
                         $("#nameLabel").text("Name")
                         $("#tempLabel").text("Temperature")
                         $("#windLabel").text("Wind")
                         $("#humidityLabel").text("Humidity")
                         $("#visibilityLabel").text("Visibility")
-                        $("#sunriseLabel").text("Sunrise")
-                        $("#sunsetLabel").text("Sunset")
+
 
                     }
                 })
@@ -114,49 +110,56 @@ const deviceLocation={
         map.setZoom(15);
         map.setCenter(marker.getPosition());
 
-    },
-
-    watchPosition:function () {
-
-        let locationOptions = {
-            enableHighAccuracy: true,
-            timeout: 10000
-        }
-
-        return navigator.geolocation.watchPosition(
-            function (position) {
-                deviceLocation.onWatch(position)
-            },
-            function (error) {
-                deviceFunctions.showCurrentState("Watch error:" +error)
-                return
-
-            },
-            locationOptions
-        )
-    },
-
-    onWatch:function(position){
-        let latitude=Number($("#latitudeCell").text())
-        let longitude=Number($("#longitudeCell").text())
-
-        let updatedLatitude = position.coords.latitude;
-        let updatedLongitude = position.coords.longitude;
-        if (updatedLatitude != latitude && updatedLongitude != longitude) {
-
-            let distance=deviceFunctions.getDistance(latitude,longitude,updatedLatitude,updatedLongitude)
-            deviceFunctions.updateDistance(distance)
-            $("#latitudeCell").text(updatedLatitude)
-            $("#longitudeCell").text(updatedLongitude)
-            
-            deviceLocation.getWeather()
-            deviceLocation.getMap()
-
-
-        }
-
     }
+
+    //    watchPosition:function () {
+    //
+    //        let locationOptions = {
+    //            enableHighAccuracy: true,
+    //            timeout: 10000
+    //        }
+    //
+    //        return navigator.geolocation.watchPosition(
+    //            function (position) {
+    //                deviceLocation.onWatch(position)
+    //            },
+    //            function (error) {
+    //                deviceFunctions.showCurrentState("Watch error:" +error)
+    //                return
+    //
+    //            },
+    //            locationOptions
+    //        )
+    //    },
+    //
+    //    onWatch:function(position){
+    //        let latitude=Number($("#latitudeCell").text())
+    //        let longitude=Number($("#longitudeCell").text())
+    //
+    //        let updatedLatitude = position.coords.latitude;
+    //        let updatedLongitude = position.coords.longitude;
+    //        if (updatedLatitude != latitude && updatedLongitude != longitude) {
+    //
+    //            let distance=deviceFunctions.getDistance(latitude,longitude,updatedLatitude,updatedLongitude)
+    //            this._prevDistance = this._distance
+    //            this._prevTime = this._time
+    //            deviceFunctions.updateDistance(distance)
+    //            this._distance = distance
+    //            this._time = new Date()
+    //            
+    //            $("#latitudeCell").text(updatedLatitude)
+    //            $("#longitudeCell").text(updatedLongitude)
+    //            
+    //            deviceLocation.getWeather()
+    //            deviceLocation.getMap()
+    //
+    //
+    //        }
+
 }
+
+
+
 
 //    let mapOptions = {
 //    center: new google.maps.LatLng(0, 0),

@@ -14,12 +14,13 @@
             #map-canvas { height: 100% }
 
         </style>
+        <script type="text/javascript" src="cordova.js"></script>
+
     </head>
 
 
     <body>
         <!--        <div id="debug" >Debug info here</div> -->
-
         <div>
             <p id="currentState" style="align:center; text-align:center; color:blue"></p>
         </div>
@@ -51,13 +52,20 @@
                     <td id="avgspeedCell"></td>
                 </tr>
                 <tr>
+                    <th id="maxspeedLabel"></th>
+                    <td id="maxspeedCell"></td>
+                </tr>
+                <tr>
                     <th id="distanceLabel"></th>
                     <td id="distanceCell"></td>
                 </tr>
+                <!--                arrow-->
+                <!--                aceleration-->
                 <tr>
                     <th id="timeLabel"></th>
                     <td id="timeCell"></td>
                 </tr>
+
             </table>
 
         </div>
@@ -108,14 +116,6 @@
                     <th id="visibilityLabel"></th>
                     <td id="visibilityCell"></td>
                 </tr>
-                <tr>
-                    <th id="sunriseLabel"></th>
-                    <td id="sunriseCell"></td>
-                </tr>
-                <tr>
-                    <th id="sunsetLabel"></th>
-                    <td id="sunsetCell"></td>
-                </tr>
 
 
             </table>
@@ -151,19 +151,20 @@
 
 
 
-        <script type="text/javascript" src="cordova.js"></script>
+
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBidFVzXcpLw5WSpeJmXoZEMpuGuPtsb68"></script>
         <script src="js/ble.js"></script>
+        <script src="js/functions.js"></script>
         <script src="js/disconnect.js"></script>
         <script src="global/convertData.js"></script>
-
-        <script src="js/functions.js"></script>
+        <script src="js/timerLibrary.js"></script>
+        <script src="js/speed.js"></script>
         <script src="js/speedometer.js"></script>
         <script src="js/location.js"></script>
+        <script src="js/timer.js"></script>
         <script src="js/waiting.js"></script>
         <script src="js/connect.js"></script>
         <script src="js/disconnect.js"></script>
-
         <script src="js/index.js"></script>
     </body>
 </html>
