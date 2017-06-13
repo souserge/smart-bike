@@ -3,9 +3,10 @@ const deviceWaiting = {
         document.addEventListener('deviceready', deviceWaiting.waitingForBluetooth, alert("NOT WORKING"))
     },
     waitingForBluetooth: function() {
+        deviceFunctions.showCurrentState("Please, enable Bluetooth")
         ble.isEnabled(deviceWaiting.onDeviceReady)
         //deviceFunctions.startRide()//
-        deviceFunctions.showCurrentState("Please, enable Bluetooth")
+        
         bluetoothButton.ontouchstart=deviceWaiting.onDeviceReady
         locationButton.ontouchstart= deviceFunctions.toggleLocation
         weatherButton.ontouchstart= deviceFunctions.toggleWeather   
