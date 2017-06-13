@@ -21,6 +21,7 @@
 
     <body>
         <!--        <div id="debug" >Debug info here</div> -->
+
         <div>
             <p id="currentState" style="align:center; text-align:center; color:blue"></p>
         </div>
@@ -70,18 +71,20 @@
 
         </div>
 
-
+        <div align="center" id="startScreen" style="padding-top:20px; padding-bottom:20px">
+            <a data-role="button" type="submit" id="startButton"></a>
+        </div>
 
         <div align="center" id="locationScreen" style="float:left;width: 180px;">
-            <a data-role="button" data-inline="true" type="submit" id="locationButton">See location</a>
+            <a data-role="button" data-inline="true" type="submit" id="locationButton">Show map</a>
         </div>
         <div align="center" id="locationInfo" >
-            <table align="center" style="width:200px; margin:0 auto; margin-left:auto; margin-right:auto; margin-bottom:10px; align:center; text-align:center;">
-                <tr>
+            <table align="center" sltyle="width:200px; margin:0 auto; margin-left:auto; margin-right:auto; margin-bottom:10px; align:center; text-align:center;" class="hidden">
+                <tr >
                     <th id="latitudeLabel"></th>
                     <td id="latitudeCell"></td>
                 </tr>
-                <tr>
+                <tr >
                     <th id="longitudeLabel"></th>
                     <td id="longitudeCell"></td>
                 </tr>
@@ -92,7 +95,7 @@
         </div>
 
         <div align="center" id="weatherScreen" style="float:right;width: 180px;">
-            <a data-role="button" data-inline="true" type="submit" id="weatherButton">See weather</a>
+            <a data-role="button" data-inline="true" type="submit" id="weatherButton">Show weather</a>
         </div>
         <div align="center" id="weatherInfo">
             <table align="center" style="width:200px; margin:0 auto; margin-left:auto; margin-right:auto; margin-bottom:10px; align:center; text-align:center;" >

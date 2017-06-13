@@ -331,7 +331,7 @@ function buildOptionsAsJSON(canvas, scaleFactor, xOffset, yOffset, additionalOpt
         needleDialWidth: 3,                         // Width of the needle dial
         needleDialStart: 0,                         // Start radius of the needle dial
         needleDialStop: 30,                         // Stop radius of the needle dial
-        needleWidth: 3,                             // Width of the needle
+        needleWidth: 6,                             // Width of the needle
         needleLineWidth: 1,                         // Width of the white part of needle
 
         // Color arc array. This is a list of the arc segments. You specify the color, alpha, and the start/stop

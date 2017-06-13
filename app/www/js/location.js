@@ -3,6 +3,7 @@ const deviceLocation={
 
 
     getLocation:function(){
+        
         let locationOptions = {
             enableHighAccuracy: true,
             timeout: 10000,
@@ -33,15 +34,17 @@ const deviceLocation={
             "speed":position.coords.speed,//null
             "timestamp":position.timestamp
         }
-        $("#latitudeCell").text(locationInfo.latitude)
-        $("#longitudeCell").text(locationInfo.longitude)
-        $("#latitudeLabel").text("Latitude")
-        $("#longitudeLabel").text("Longitude")
+//        $("#latitudeCell").text(locationInfo.latitude)
+//        $("#longitudeCell").text(locationInfo.longitude)
+//        $("#latitudeLabel").text("Latitude")
+//        $("#longitudeLabel").text("Longitude")
     },
 
     getWeather:function(){
-        let latitude=Number($("#latitudeCell").text());
-        let longitude=Number($("#longitudeCell").text());
+        let latitude=deviceSpeed._lat
+        let longitude=deviceSpeed._long
+//        let latitude=Number($("#latitudeCell").text());
+//        let longitude=Number($("#longitudeCell").text());
 
         let weatherKey="aa928f2867a6ea5b7bd2e4a51dcb7146"
         let queryString =
@@ -56,7 +59,7 @@ const deviceLocation={
 
                         let weatherInfo={
                             "description":results.name,
-                            "temp":Math.round((results.main.temp-32)/1.8),//F a ºC
+                            "temp":Math.round((results.main.temp-32)/1.8),//F to ºC
                             "wind":results.wind.speed,
                             "humidity":results.main.humidity,
                             "visibility":results.weather[0].main,
@@ -88,8 +91,10 @@ const deviceLocation={
 
 
     getMap:function(){
-        let latitude=Number($("#latitudeCell").text());
-        let longitude=Number($("#longitudeCell").text());
+        let latitude=deviceSpeed._lat
+        let longitude=deviceSpeed._long
+//        let latitude=Number($("#latitudeCell").text());
+//        let longitude=Number($("#longitudeCell").text());
         var mapOptions = {
             center: new google.maps.LatLng(0, 0),
             zoom: 1,

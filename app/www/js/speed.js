@@ -1,4 +1,3 @@
-try{
 
     const deviceSpeed={
         getLocation:function(){
@@ -29,8 +28,12 @@ try{
                 this._distance = distance
                 this._time = new Date()
 
-                $("#latitudeCell").text(updatedLatitude)
-                $("#longitudeCell").text(updatedLongitude)
+//                $("#latitudeCell").text(updatedLatitude)
+//                $("#longitudeCell").text(updatedLongitude)
+                
+                
+                
+                
             }
             this._lat = updatedLatitude
             this._long = updatedLongitude
@@ -46,12 +49,16 @@ try{
 
     let locationTimer = new Timer()
     locationTimer.bind(1000, () => {
-        //deviceSpeed.getLocation()
+
         let speed=(Math.abs((deviceSpeed._distance-deviceSpeed._prevDistance)/(deviceSpeed._time-deviceSpeed._prevTime)) * 3600000 ).toFixed(2)
         $("#speedCell").text(speed)
+
+        let canvasId="canvasId";
+        let doAnimation=false;
+        drawSpeedometer(speed, canvasId, doAnimation);
+        
+        
     })
     deviceSpeed.getLocation()
     locationTimer.start()
     deviceSpeed._time = new Date()
-}catch(error){alert("Speed error: "+error)
-             }

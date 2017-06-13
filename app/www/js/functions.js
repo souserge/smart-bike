@@ -4,6 +4,7 @@ const deviceFunctions={
         var x = document.getElementById('locationInfo');
         if (x.style.display === 'none') {
             x.style.display = 'block';
+            deviceLocation.getMap();
         } else {
             x.style.display = 'none';
         }
@@ -13,9 +14,12 @@ const deviceFunctions={
         var y = document.getElementById('weatherInfo');
         if (y.style.display === 'none') {
             y.style.display = 'block';
+            deviceLocation.getWeather();
         } else {
             y.style.display = 'none';
         }
+
+
     },
     getDistance:function(lat1, lon1, lat2, lon2) {
         var R = 6371; // Radius of the earth in km
@@ -71,6 +75,7 @@ const deviceFunctions={
         $("#weatherScreen").hide()
         $("#weatherInfo").hide()
         $("#alarmScreen").hide()
+        $("#startButton").hide()
 
     },
     showToggle:function(){
@@ -86,10 +91,11 @@ const deviceFunctions={
         $("#weatherScreen").hide()
         $("#weatherInfo").hide()
         $("#alarmScreen").hide()
+        $("#startButton").hide()
     },
 
 
-    showEverything: function() {
+    startRide: function() {
         $("#bluetoothScreen").hide()
         $("#statsScreen").show()
         $("#lightScreen").show()
@@ -99,6 +105,7 @@ const deviceFunctions={
         $("#locationInfo").hide()
         $("#weatherScreen").show()
         $("#weatherInfo").hide()
+        $("#startButton").show()
         $("#alarmScreen").show()
 
 
@@ -155,11 +162,61 @@ const deviceFunctions={
         $("#distanceLabel").text("Distance")
         $("#timeLabel").text("Time")
 
+        $("#startButton").text("Stop ride")
+        startButton.ontouchstart=deviceFunctions.stopRide
+
+
+    },
+
+    stopRide:function(){
+        $("#bluetoothScreen").hide()
+        $("#statsScreen").hide()
+        $("#lightScreen").hide()
+        $("#autoScreen").hide()
+        $("#acelScreen").hide()
+        $("#locationScreen").hide()
+        $("#locationInfo").hide()
+        $("#weatherScreen").hide()
+        $("#weatherInfo").hide()
+        $("#alarmScreen").hide()
+
+        locationTimer.stop()
+        rideTimer.stop()
+        
+
+        $("#startButton").text("Start ride")
+        $("#startButton").show()
+        startButton.ontouchstart=deviceFunctions.resetData
+    },
+
+    resetData:function(){
+        $("#speedCell").text(0)
+        const time = miliToTime(0)
+        $("#timeCell").text(time)
+        let startDate = new Date()
+        rideTimer.bind(1000, () => {
+            const mili = Math.abs(new Date() - startDate)
+            const time = miliToTime(mili)
+            $("#timeCell").text(time)
+            //        let speed = $("#speedCell").text((currentDistance-previousDistance)/mili)
+
+        })
+        rideTimer.start()
+        
+        deviceLocation._prevTime = startDate
+        locationTimer.start()
+        locationTimer.bind(1000, () => {
+
+        let speed=(Math.abs((deviceSpeed._distance-deviceSpeed._prevDistance)/(deviceSpeed._time-deviceSpeed._prevTime)) * 3600000 ).toFixed(2)
+        $("#speedCell").text(speed)
 
         let canvasId="canvasId";
         let doAnimation=false;
-        drawSpeedometer(targetSpeed, canvasId, doAnimation);
-
+        drawSpeedometer(speed, canvasId, doAnimation);
+        
+        
+    })
+        deviceFunctions.startRide()
     }
 }
 

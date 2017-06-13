@@ -37,7 +37,10 @@ const deviceConnecting={
        // alert("connected")
         deviceFunctions.showCurrentState("Connected")
         deviceConnecting.connectedPeripheral = peripheral;
-        deviceFunctions.showEverything()
+        //deviceFunctions.startRide()
+        $("#startButton").text("Start ride")
+        $("#startButton").show()
+        startButton.ontouchstart=deviceFunctions.startRide
         
     }
 
