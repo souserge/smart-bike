@@ -43,7 +43,8 @@
         _distance: 0,
         _prevDistance: 0,
         _time: new Date(),
-        _prevTime: new Date()
+        _prevTime: new Date(),
+        _maxSpeed: 0
     }
 
 
@@ -52,10 +53,13 @@
 
         let speed=(Math.abs((deviceSpeed._distance-deviceSpeed._prevDistance)/(deviceSpeed._time-deviceSpeed._prevTime)) * 3600000 ).toFixed(2)
         $("#speedCell").text(speed)
+        
 
         let canvasId="canvasId";
         let doAnimation=false;
         drawSpeedometer(speed, canvasId, doAnimation);
+        
+        
         
         
     })

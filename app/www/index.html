@@ -37,13 +37,17 @@
             </select>
         </div>
 
+
         <div align="center" id="acelScreen">
             <canvas id="canvasId" width="220" height="110">          <!--size=0.5*normalsize-->
                 Canvas not available.
             </canvas>
         </div>
-        <div align="center" id="statsScreen">
-            <table align="center" style="width:200px margin:0 auto; margin-left:auto; margin-right:auto; align:center;margin-bottom:10px;margin-top:10px; text-align:center;">
+        <div align="center" id="arrowScreen" style="float:left; width:75px;height:50px;margin-bottom:100px">
+            <p id="arrow"></p>
+        </div>
+        <div align="center" id="statsScreen" >
+            <table align="center" style="width:200px margin:0 auto; margin-left:auto; margin-right:auto; align:center;margin-bottom:10px;margin-top:10px; text-align:center ">
                 <tr>
                     <th id="speedLabel"></th>
                     <td id="speedCell"></td>
@@ -60,8 +64,6 @@
                     <th id="distanceLabel"></th>
                     <td id="distanceCell"></td>
                 </tr>
-                <!--                arrow-->
-                <!--                aceleration-->
                 <tr>
                     <th id="timeLabel"></th>
                     <td id="timeCell"></td>
@@ -71,7 +73,7 @@
 
         </div>
 
-        <div align="center" id="startScreen" style="padding-top:20px; padding-bottom:20px">
+        <div align="center" id="startScreen" style="float:center;padding-top:20px; padding-bottom:20px" >
             <a data-role="button" type="submit" id="startButton"></a>
         </div>
 

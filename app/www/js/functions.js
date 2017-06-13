@@ -36,7 +36,7 @@ const deviceFunctions={
         let string=$("#distanceCell").text()
         let distance=Number(string.substr(0,string.length-3))
         let totalDistance=distance+newDistance
-        $("#distanceCell").text(totalDistance.toFixed(3)+" km")
+        $("#distanceCell").text(totalDistance.toFixed(2)+" km")
     },
     checkBluetooth: function(){
         ble.isEnabled("",
@@ -107,6 +107,7 @@ const deviceFunctions={
         $("#weatherInfo").hide()
         $("#startButton").show()
         $("#alarmScreen").show()
+        $("#arrowScreen").show()
 
 
         const lightUuid =  bleIds.get('LIGHT_CH').uuid
@@ -157,10 +158,12 @@ const deviceFunctions={
         //$("#speedCell").text(targetSpeed+" km/h")
         //$("#avgspeedCell").text(avgspeed+" km/h")
 
+        $("#statsScreen").css("fontSize", 20);
         $("#speedLabel").text("Speed")
         $("#avgspeedLabel").text("Avg speed")
         $("#distanceLabel").text("Distance")
         $("#timeLabel").text("Time")
+        $("#maxspeedLabel").text("Max speed")
 
         $("#startButton").text("Stop ride")
         startButton.ontouchstart=deviceFunctions.stopRide
@@ -179,10 +182,11 @@ const deviceFunctions={
         $("#weatherScreen").hide()
         $("#weatherInfo").hide()
         $("#alarmScreen").hide()
+        $("#arrowScreen").hide()
 
         locationTimer.stop()
         rideTimer.stop()
-        
+
 
         $("#startButton").text("Start ride")
         $("#startButton").show()
@@ -190,33 +194,56 @@ const deviceFunctions={
     },
 
     resetData:function(){
-        $("#speedCell").text(0)
+        deviceSpeed._maxSpeed=0
+        $("#maxspeedCell").text(deviceSpeed._maxSpeed+" km/h")
+        $("#avgspeedCell").text(0+" km/h")
+        $("#speedCell").text(0+" km/h")
         const time = miliToTime(0)
         $("#timeCell").text(time)
-        let startDate = new Date()
+        deviceFunctions.startDate = new Date()
         rideTimer.bind(1000, () => {
-            const mili = Math.abs(new Date() - startDate)
+            const mili = Math.abs(new Date() - deviceFunctions.startDate)
             const time = miliToTime(mili)
             $("#timeCell").text(time)
             //        let speed = $("#speedCell").text((currentDistance-previousDistance)/mili)
 
         })
         rideTimer.start()
-        
-        deviceLocation._prevTime = startDate
+
+        deviceLocation._prevTime = deviceFunctions.startDate
         locationTimer.start()
         locationTimer.bind(1000, () => {
 
-        let speed=(Math.abs((deviceSpeed._distance-deviceSpeed._prevDistance)/(deviceSpeed._time-deviceSpeed._prevTime)) * 3600000 ).toFixed(2)
-        $("#speedCell").text(speed)
+            let speed=(Math.abs((deviceSpeed._distance-deviceSpeed._prevDistance)/(deviceSpeed._time-deviceSpeed._prevTime)) * 3600000 ).toFixed(2)
+            $("#speedCell").text(speed+" km/h")
+            let avgSpeed=(Math.abs((deviceSpeed._distance)/(deviceSpeed._time-deviceFunctions.startDate)) * 3600000 ).toFixed(2)
+            $("#avgspeedCell").text(avgSpeed+" km/h")
 
-        let canvasId="canvasId";
-        let doAnimation=false;
-        drawSpeedometer(speed, canvasId, doAnimation);
-        
-        
-    })
+            if (speed>=deviceSpeed._maxSpeed){
+                $("#maxspeedCell").text(speed+" km/h")
+                deviceSpeed._maxSpeed=speed
+            }
+//            if(speed==0&&avgSpeed==0)
+//                $("#arrow").text("")
+//            else 
+            if (speed>avgSpeed){
+                $("#arrow").text("↑")
+                $("#arrow").css({'color': 'green', 'font-size': '130px','margin':'auto','margin-top':'auto','margin-bottom':'auto','margin-left':'30px','margin-right':'auto'})
+            }
+            else{
+                $("#arrow").text("↓")
+                $("#arrow").css({'color': 'red', 'font-size': '130px','margin':'auto','margin-top':'auto','margin-bottom':'auto','margin-left':'30px','margin-right':'auto'})
+            }
+
+            let canvasId="canvasId";
+            let doAnimation=false;
+            drawSpeedometer(speed, canvasId, doAnimation);
+
+
+        })
         deviceFunctions.startRide()
-    }
+    },
+    startDate:null
+
 }
 

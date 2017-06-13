@@ -40,7 +40,7 @@ const deviceConnecting={
         //deviceFunctions.startRide()
         $("#startButton").text("Start ride")
         $("#startButton").show()
-        startButton.ontouchstart=deviceFunctions.startRide
+        startButton.ontouchstart=deviceFunctions.resetData
         
     }
 
