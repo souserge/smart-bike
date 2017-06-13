@@ -1,6 +1,6 @@
 const deviceWaiting = {
     bindEvents: function() {
-        document.addEventListener('deviceready', deviceWaiting.waitingForBluetooth, false)
+        document.addEventListener('deviceready', deviceWaiting.waitingForBluetooth, alert("NOT WORKING"))
     },
     waitingForBluetooth: function() {
         ble.isEnabled(deviceWaiting.onDeviceReady)
