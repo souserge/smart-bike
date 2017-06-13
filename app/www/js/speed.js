@@ -7,7 +7,7 @@
                 maximumAge: 3600000
             }
             try {
-            navigator.geolocation.currentPosition(
+            navigator.geolocation.watchPosition(
                 function (position) {
                     deviceSpeed.onLocation(position)
                 },
