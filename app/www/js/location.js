@@ -91,6 +91,7 @@ const deviceLocation={
 
 
     getMap:function(){
+        try{
         let latitude=deviceSpeed._lat
         let longitude=deviceSpeed._long
 //        let latitude=Number($("#latitudeCell").text());
@@ -101,6 +102,7 @@ const deviceLocation={
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
 
+        
         map = new google.maps.Map
         (document.getElementById("mapScreen"), mapOptions);
 
@@ -114,6 +116,7 @@ const deviceLocation={
         marker.setMap(map);
         map.setZoom(15);
         map.setCenter(marker.getPosition());
+        }catch(e){alert("Map error: "+e)}
 
     }
 
