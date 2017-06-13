@@ -6,6 +6,7 @@
                 timeout: 10000,
                 maximumAge: 3600000
             }
+            try {
             navigator.geolocation.currentPosition(
                 function (position) {
                     deviceSpeed.onLocation(position)
@@ -15,6 +16,9 @@
                 },
                 locationOptions
             )
+            } catch(e) {
+                alert("GeoLoc: " + e)
+            }
         },
         onLocation:function(position){
 
