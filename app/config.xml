@@ -12,5 +12,7 @@
     <preference name="DisallowOverscroll" value="true" />
     <plugin name="cordova-plugin-ble-central" spec="1.1.4" />
     <plugin name="cordova-plugin-geolocation" spec="2.4.3" />
+    <plugin name="cordova-plugin-compat" spec="1.1.0" />
     <access origin="*" />
+    
 </widget>
