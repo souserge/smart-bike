@@ -76,7 +76,8 @@ const deviceFunctions={
         $("#weatherInfo").hide()
         $("#alarmScreen").hide()
         $("#startButton").hide()
-
+        $("#arrowScreen").hide()
+        
     },
     showToggle:function(){
         $("#bluetoothScreen").hide()
@@ -92,6 +93,7 @@ const deviceFunctions={
         $("#weatherInfo").hide()
         $("#alarmScreen").hide()
         $("#startButton").hide()
+        $("#arrowScreen").hide()
     },
 
 
