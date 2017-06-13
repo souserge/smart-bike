@@ -6,7 +6,7 @@
                 timeout: 10000,
                 maximumAge: 3600000
             }
-            navigator.geolocation.watchPosition(
+            navigator.geolocation.currentPosition(
                 function (position) {
                     deviceSpeed.onLocation(position)
                 },
