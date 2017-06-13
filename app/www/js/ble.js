@@ -14,8 +14,3 @@ class BleId {
   bleIds.set('LIGHT_CH', new BleId('Light Characteristic', 'D272'))
   bleIds.set('ANTI_THEFT_CH', new BleId('Anti-Theft Characteristic', 'D273'))
 })()
-
-module.exports = {
-  bleIds
-}
-

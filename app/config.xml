@@ -10,16 +10,7 @@
     <preference name="KeyboardDisplayRequiresUserAction" value="true" />
     <preference name="Orientation" value="portrait" />
     <preference name="DisallowOverscroll" value="true" />
-    <plugin spec="https://github.com/apache/cordova-plugin-media#b05c66c" />
+    <plugin name="cordova-plugin-ble-central" spec="1.1.4" />
     <plugin name="cordova-plugin-geolocation" spec="2.4.3" />
-    <plugin name="cordova-plugin-tts" spec="0.2.3" />
-    <!--
-    <plugin name="cordova-plugin-geolocation" spec="2.4.3" />
-    <plugin name="cordova-plugin-tts" spec="0.2.3" />
-    <plugin name="cordova-plugin-media" spec="https://github.com/apache/cordova-plugin-media" />
-    <plugin spec="https://github.com/apache/cordova-plugin-media#b05c66c" />
--->
-
     <access origin="*" />
-
 </widget>
