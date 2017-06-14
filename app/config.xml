@@ -14,5 +14,11 @@
     <plugin name="cordova-plugin-compat" spec="1.1.0" />
     <plugin name="cordova-plugin-geolocation" spec="2.4.3" />
     <access origin="*" />
-    
+
+<!-- Wildcards are allowed for the protocol, as a prefix
+     to the host, or as a suffix to the path -->
+<allow-intent href="https://*.maps.googleapis.com/*" />
+
+<allow-navigation href="*://*/*" />
+    <plugin name="cordova-plugin-whitelist" spec="~1.3.2" />
 </widget>
