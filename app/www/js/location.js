@@ -3,7 +3,7 @@ const deviceLocation={
 
 
     getLocation:function(){
-
+        
         let locationOptions = {
             enableHighAccuracy: true,
             timeout: 10000,
@@ -34,17 +34,17 @@ const deviceLocation={
             "speed":position.coords.speed,//null
             "timestamp":position.timestamp
         }
-        //        $("#latitudeCell").text(locationInfo.latitude)
-        //        $("#longitudeCell").text(locationInfo.longitude)
-        //        $("#latitudeLabel").text("Latitude")
-        //        $("#longitudeLabel").text("Longitude")
-        },
+//        $("#latitudeCell").text(locationInfo.latitude)
+//        $("#longitudeCell").text(locationInfo.longitude)
+//        $("#latitudeLabel").text("Latitude")
+//        $("#longitudeLabel").text("Longitude")
+    },
 
     getWeather:function(){
         let latitude=deviceSpeed._lat
         let longitude=deviceSpeed._long
-        //        let latitude=Number($("#latitudeCell").text());
-        //        let longitude=Number($("#longitudeCell").text());
+//        let latitude=Number($("#latitudeCell").text());
+//        let longitude=Number($("#longitudeCell").text());
 
         let weatherKey="aa928f2867a6ea5b7bd2e4a51dcb7146"
         let queryString =
@@ -92,33 +92,31 @@ const deviceLocation={
 
     getMap:function(){
         try{
-            let latitude=deviceSpeed._lat
-            let longitude=deviceSpeed._long
-            //        let latitude=Number($("#latitudeCell").text());
-            //        let longitude=Number($("#longitudeCell").text());
-            platform.ready().then(() => { 
-                var mapOptions = {
-                    center: new google.maps.LatLng(0, 0),
-                    zoom: 1,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                };
+        let latitude=deviceSpeed._lat
+        let longitude=deviceSpeed._long
+//        let latitude=Number($("#latitudeCell").text());
+//        let longitude=Number($("#longitudeCell").text());
+        
+        var mapOptions = {
+            center: new google.maps.LatLng(0, 0),
+            zoom: 1,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        
+        map = new google.maps.Map
+        (document.getElementById("mapScreen"), mapOptions);
 
 
-                map = new google.maps.Map
-                (document.getElementById("mapScreen"), mapOptions);
+        var latLong = new google.maps.LatLng(latitude, longitude);
 
+        var marker = new google.maps.Marker({
+            position: latLong
+        });
 
-                var latLong = new google.maps.LatLng(latitude, longitude);
-
-                var marker = new google.maps.Marker({
-                    position: latLong
-                });
-
-                marker.setMap(map);
-                map.setZoom(15);
-                map.setCenter(marker.getPosition());
-            });
-
+        marker.setMap(map);
+        map.setZoom(15);
+        map.setCenter(marker.getPosition());
         }catch(e){alert("Map error: "+e)}
 
     }
