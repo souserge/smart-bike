@@ -9,7 +9,7 @@ const deviceWaiting = {
         
         bluetoothButton.ontouchstart=deviceWaiting.onDeviceReady
         locationButton.ontouchstart= deviceFunctions.toggleLocation
-        weatherButton.ontouchstart= deviceFunctions.toggleWeather },2000)
+        weatherButton.ontouchstart= deviceFunctions.toggleWeather },1000)
           
     },
     onDeviceReady: function() {
