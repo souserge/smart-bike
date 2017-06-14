@@ -5,7 +5,7 @@ const deviceWaiting = {
     waitingForBluetooth: function() {
         setTimeout(function(){deviceFunctions.showCurrentState("Please, enable Bluetooth")
         ble.isEnabled(deviceWaiting.onDeviceReady)
-        //deviceFunctions.startRide()//
+        deviceFunctions.startRide()//
         
         bluetoothButton.ontouchstart=deviceWaiting.onDeviceReady
         locationButton.ontouchstart= deviceFunctions.toggleLocation

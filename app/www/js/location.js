@@ -3,7 +3,7 @@ const deviceLocation={
 
 
     getLocation:function(){
-        
+
         let locationOptions = {
             enableHighAccuracy: true,
             timeout: 10000,
@@ -34,17 +34,17 @@ const deviceLocation={
             "speed":position.coords.speed,//null
             "timestamp":position.timestamp
         }
-//        $("#latitudeCell").text(locationInfo.latitude)
-//        $("#longitudeCell").text(locationInfo.longitude)
-//        $("#latitudeLabel").text("Latitude")
-//        $("#longitudeLabel").text("Longitude")
-    },
+        //        $("#latitudeCell").text(locationInfo.latitude)
+        //        $("#longitudeCell").text(locationInfo.longitude)
+        //        $("#latitudeLabel").text("Latitude")
+        //        $("#longitudeLabel").text("Longitude")
+        },
 
     getWeather:function(){
         let latitude=deviceSpeed._lat
         let longitude=deviceSpeed._long
-//        let latitude=Number($("#latitudeCell").text());
-//        let longitude=Number($("#longitudeCell").text());
+        //        let latitude=Number($("#latitudeCell").text());
+        //        let longitude=Number($("#longitudeCell").text());
 
         let weatherKey="aa928f2867a6ea5b7bd2e4a51dcb7146"
         let queryString =
@@ -91,19 +91,18 @@ const deviceLocation={
 
 
     getMap:function(){
-        try{
         let latitude=deviceSpeed._lat
         let longitude=deviceSpeed._long
-//        let latitude=Number($("#latitudeCell").text());
-//        let longitude=Number($("#longitudeCell").text());
-        
+        //        let latitude=Number($("#latitudeCell").text());
+        //        let longitude=Number($("#longitudeCell").text());
+
         var mapOptions = {
             center: new google.maps.LatLng(0, 0),
             zoom: 1,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
 
-        
+
         map = new google.maps.Map
         (document.getElementById("mapScreen"), mapOptions);
 
@@ -117,9 +116,23 @@ const deviceLocation={
         marker.setMap(map);
         map.setZoom(15);
         map.setCenter(marker.getPosition());
-        }catch(e){alert("Map error: "+e)}
+        try{
+            coordinates= {lat: latitude, lng: longitude}
+            deviceLocation._routeCoordinates.push(coordinates)
+            var routePath = new google.maps.Polyline({
+                path: deviceLocation._routeCoordinates,
+                geodesic: true,
+                strokeColor: '#FF0000',
+                strokeOpacity: 1.0,
+                strokeWeight: 2
+            });
 
-    }
+            routePath.setMap(map);
+        }catch(e){alert("error: "+e)}
+
+    },
+
+    _routeCoordinates:[]
 
     //    watchPosition:function () {
     //
