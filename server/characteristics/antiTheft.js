@@ -1,6 +1,6 @@
 const bleno = require('bleno')
 
-const ids = require('../../global/ble').bleIds
+const ids = require('../global/ble').bleIds
 const antiTheftIO = require('./senact/antiTheftIO')
 
 const Characteristic = bleno.Characteristic,
@@ -13,12 +13,12 @@ class AntiTheftCharacteristic extends Characteristic {
       properties: [ 'read', 'write']
     })
   }
-  
+
   onWriteRequest(data, offset, withoutResponse, callback) {
     console.log('AntiTheft - WriteRequest:')
     const strData = data.toString('utf8')
     const isOn = !!+strData[0]
-    antiTheftIO.toggle(isOn)   
+    antiTheftIO.toggle(isOn)
     callback(this.RESULT_SUCCESS)
   }
 
@@ -26,7 +26,7 @@ class AntiTheftCharacteristic extends Characteristic {
     console.log('AntiTheft - ReadRequest:')
     const data = Buffer.from('' + +antiTheftIO.isOn, 'utf8')
     callback(this.RESULT_SUCCESS, data)
-  } 
+  }
 }
 
 module.exports = new AntiTheftCharacteristic()

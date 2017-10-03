@@ -1,5 +1,5 @@
 const sensors = {
-  LIGHT: 7,
+  LIGHT: 12,
   VIBRA: 11
 }
 
